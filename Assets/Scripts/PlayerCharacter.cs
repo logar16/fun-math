@@ -2,13 +2,20 @@ using UnityEngine;
 
 namespace FunMath
 {
-    public class PlayerCharacter : BaseCharacter
+    public class PlayerCharacter : MonoBehaviour
     {
         [SerializeField]
         [Range(0.1f, 2f)]
         float speed = 1f;
 
+        protected Rigidbody2D rb;
+
         bool Jumping = false;
+
+        void Start()
+        {
+            rb = GetComponent<Rigidbody2D>();
+        }
 
         void Update()
         {
@@ -30,6 +37,12 @@ namespace FunMath
             {
                 rb.AddForce(movement * speed, ForceMode2D.Force);
             }
+
+            //if (Mathf.Abs(rb.velocity.x) > MaxSpeed)
+            //{
+            //    var speed = rb.velocity.x > 0 ? MaxSpeed : -MaxSpeed;
+            //    rb.velocity = new Vector2(speed, rb.velocity.y);
+            //}
 
 
             //Jump (but only if on the ground)
