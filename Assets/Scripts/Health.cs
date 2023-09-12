@@ -8,9 +8,9 @@ namespace FunMath
         [Range(0, 100)]
         int health = 10;
 
-        public void TakeDamage(int damage)
+        public void ModifyHealth(int change)
         {
-            health -= damage;
+            health += change;
             if (health < 0)
             {
                 // TODO: Fire death event

@@ -25,7 +25,7 @@ namespace FunMath
             var health = collision.gameObject.GetComponent<Health>();
             if (health)
             {
-                health.TakeDamage(Damage);
+                health.ModifyHealth(-Damage);
             }
         }
     }
