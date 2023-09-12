@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace FunMath
 {
-    public class EnemyCharacter : BaseCharacter
+    public class EnemyCharacter : MonoBehaviour
     {
         void Start()
         {
