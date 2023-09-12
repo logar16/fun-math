@@ -11,15 +11,25 @@ namespace FunMath
         [SerializeField]
         [Range(0.01f, 10f)]
         float Size = 1f;
+
+        [SerializeField]
+        [Range(1f, 10f)]
+        float MaxSpeed = 5f;
+
+        protected Rigidbody2D rb;
         
         void Start()
         {
-        
+            rb = GetComponent<Rigidbody2D>();
         }
 
         void Update()
         {
-        
+            if (Mathf.Abs(rb.velocity.x) > MaxSpeed)
+            {
+                var speed = rb.velocity.x > 0 ? MaxSpeed : -MaxSpeed;
+                rb.velocity = new Vector2(speed, rb.velocity.y);
+            }
         }
 
         protected void TakeDamage(int damage)
