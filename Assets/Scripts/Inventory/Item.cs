@@ -2,18 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Base class to hold all types of items
-public class Item : MonoBehaviour
+namespace FunMath
 {
-    public enum ItemType
+    // Base class to hold all types of items
+    [System.Serializable]
+    public class Item : MonoBehaviour
     {
-        // These are the type of items you can pick up, aka our math 'operators'
-        Addition,
-        Subtraction,
-        Multiply,
-        Divide,
-        None
+        public enum ItemType
+        {
+            // These are the type of items you can pick up, aka our math 'operators'
+            Addition = 0,
+            Subtraction,
+            Multiply,
+            Divide,
+
+            OperationMax,
+
+            Number,
+            None
+        }
+        [SerializeField]
+        public ItemType thisItemType;
     }
-    [SerializeField]
-    public ItemType thisItemType;
 }
