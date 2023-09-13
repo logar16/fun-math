@@ -1,30 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 namespace FunMath
 {
     [RequireComponent(typeof(Item))]
-    public class PickupItem : MonoBehaviour
+    public class PickupItem<T> : MonoBehaviour where T : Item
     {
         [SerializeField]
-        private Item item;
+        private T item;
         void Start()
         {
-            item = GetComponent<Item>();
+            item = GetComponent<T>();
         }
         private void OnTriggerEnter2D(Collider2D other)
         {
-            var inventory = other.gameObject.GetComponent<Inventory>();
-            if (inventory != null)
+            var selector = other.gameObject.GetComponent<InventorySelector<T>>();
+            if (selector != null)
             {
-                Pickup(inventory);
+                Pickup(selector);
             }
         }
 
-        public void Pickup(Inventory inventory)
+        public void Pickup(InventorySelector<T> inventory)
         {
-            inventory.ModifyItemSlot(item, 1);
+            inventory.AddItem(item);
 
             // Destroying the object destroys reference in C#. The 'right'
             // move is to abstract out the item from monobehavior so it can live without a gameobject

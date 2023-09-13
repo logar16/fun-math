@@ -4,23 +4,30 @@ using UnityEngine;
 
 namespace FunMath
 {
-    [RequireComponent(typeof(Inventory))]
-    public class InventorySelector : MonoBehaviour
+    public class InventorySelector<T> where T : Item
     {
         // Hold a reference to the inventory
         // ASSUMPTIONS: Inventory is NEVER empty. It is filled with empty item slots.
-        [SerializeField]
-        Inventory data;
+        Inventory<T> data;
+        public Inventory<T> GetInventory() { return data; }
 
         // Index of the current data
-        // Starts at -1 as there is nothing in inventory
-        [SerializeField]
-        int index = 0; //SERIALIZE IS ONLY FOR DEBUGGING
+        int index = 0;
+
+        // Event for when selection changed
+        public delegate void SelectionChanged(int index);
+        public event SelectionChanged OnSelectionChange;
+
+
+        public InventorySelector()
+        {
+            data = new Inventory<T>();
+        }
 
         public void SwitchItemRight()
         {
             // Round back to 0 when at rightmost slot
-            if(index + 1 >= data.GetInventoryItemSlots().Count)
+            if(index + 1 >= data.GetFilledSlotsCount())
             {
                 index = 0;
             }
@@ -29,6 +36,7 @@ namespace FunMath
                 // Increase index
                 index++;
             }
+            OnSelectionChange?.Invoke(index);
         }
 
         public void SwitchItemLeft()
@@ -36,18 +44,36 @@ namespace FunMath
             // Round back to count-1 when at leftmost slot
             if (index - 1 < 0)
             {
-                index = data.GetInventoryItemSlots().Count - 1;
+                index = data.GetFilledSlotsCount() - 1;
             }
             else
             {
                 // Decrease index (moves left)
                 index--;
             }
+            OnSelectionChange?.Invoke(index);
         }
 
-        public ItemSlot QueryCurrentItemSlot()
+        public T QueryCurrentItem()
         {
-            return data.GetInventoryItemSlots()[index];
+            return data.GetItemAt(index);
+        }
+
+        public bool CanUseCurrentItem()
+        {
+            var item = data.GetItemAt(index);
+            return item != null && item.Count > 0;
+        }
+
+        public void UseCurrentItem()
+        {
+            if (CanUseCurrentItem())
+                data.ModifyItemAt(index, -1);
+        }
+
+        public void AddItem(T item)
+        {
+            data.ModifyItemSlot(item);
         }
     }
 }

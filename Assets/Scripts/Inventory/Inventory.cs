@@ -1,96 +1,89 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace FunMath
 {
-    // This class represents a slot within the player's inventory that holds an item
-    [System.Serializable]
-    public class ItemSlot
-    {
-        public ItemSlot(Item item, int Count)
-        {
-            this.item = item;
-            this.ItemCount = Count;
-        }
-        [SerializeField]
-        public Item item;
-        public int ItemCount = 0;
-        public bool Empty()
-        {
-            return ItemCount == 0;
-        }
-    }
-
-    public class Inventory : MonoBehaviour
+    public class Inventory<T> where T : Item
     {
         public int MaxNumberOfItem = 100;
         public bool InfiniteItem = false;
-        public int MaxNumberOfTypes = (int)Item.ItemType.OperationMax; // By default goes to max number of operations
+        
+        private List<T> Items;
 
-        private void Start()
+        // Event for when the inventory changes
+        public delegate void InventoryChanged(List<T> Items);
+        public event InventoryChanged OnInventoryChanged;
+
+        public Inventory(int maxNumberOfTypes = 5)
         {
-            Items = new List<ItemSlot>(MaxNumberOfTypes);
-            // Regardless of items, we will always have this amount of inventory slots
-            for(int i = 0; i < MaxNumberOfTypes; ++i)
+            Items = new List<T>(maxNumberOfTypes);
+        }
+
+        public int GetFilledSlotsCount()
+        {
+            return Items.Count(item => item != null);
+        }
+
+        public T GetItemAt(int index)
+        {
+            if (index < 0 || index >= Items.Count)
             {
-                Items.Add(new ItemSlot(null, 0));
+                return default(T);
             }
+            return Items[index];
         }
 
-        [SerializeField]
-        private List<ItemSlot> Items ; // Holds the player's collected items
-        public List<ItemSlot> GetInventoryItemSlots()
+        public bool EmptySlotsAvailable()
         {
-            return Items;
+            return Items.LastOrDefault() == null;
         }
 
-        public void AddNewItemToSlot(ItemSlot slot, Item item, int count)
+        private void FillEmptySlot(T item)
         {
-            // If the item slot does not contain an item yet
-            if (slot.item == null)
+            for (int i = 0; i < Items.Count; i++)
             {
-                // ASSMPUTION IS THAT WE ARE ALWAYS ADDING COUNT HERE
-                slot.item = item;
-                slot.ItemCount = count;
-                return;
-            }
-            Debug.LogError("Attempting to add item to a non null item slot");
-        }
-
-        // Given an item slot, change its count
-        public void ModifyItemSlot(ItemSlot slot, int count)
-        {
-            // Ensure that infinite is not on when we want to modify item count
-            if (!this.InfiniteItem)
-            {
-                // Ensure we don't go over max
-                if (MaxNumberOfItem > (slot.ItemCount + count))
+                if (Items[i] == null)
                 {
-                    // Add count
-                    slot.ItemCount += count;
-                }
-                // Ensure we don't go below 0
-                else if (0 >= (slot.ItemCount + count))
-                {
-                    // Else we just go to 0
-                    slot.ItemCount = 0;
+                    Items[i] = item;
+                    return;
                 }
             }
         }
 
-        public void ModifyItemSlot(Item item, int count)
+        /// <summary>
+        /// Add the item to the inventory according to its count.
+        /// If no such item is in the inventory, we add a new entry/slot
+        /// </summary>
+        /// <param name="item">The item definition and count to add</param>
+        public void ModifyItemSlot(T item)
         {
-            ItemSlot slot = FindItem(item.thisItemType);
+            var slot = FindItem(item);
 
             if (slot != null)
-                ModifyItemSlot(slot, count);
+            {
+                var result = item.Count + slot.Count;
+                if (result > MaxNumberOfItem && !InfiniteItem)
+                {
+                    slot.Count = MaxNumberOfItem;
+                    //item.Count = result - MaxNumberOfItem;  //If you wanted to leave some behind...
+                }
+                else if (result < 0)
+                {
+                    slot.Count = 0;
+                    // TODO: Remove item from inventory altogether?
+                }
+                else
+                {
+                    slot.Count = result;
+                    //item.Count = 0;
+                }
+            }
             else
             {
-                // A little inefficient
-                if(FindEmptySlot(out slot))
+                if (EmptySlotsAvailable())
                 {
-                    AddNewItemToSlot(slot, item, count);
+                    FillEmptySlot(item);
                 }
                 else
                 {
@@ -98,52 +91,28 @@ namespace FunMath
                     Debug.LogWarning("No empty slots found to add item");
                 }
             }
+            // emit event after everything is done
+            OnInventoryChanged?.Invoke(Items.ToList());
         }
 
-        // Go through the inventory list to find if we already have the same type
-        public ItemSlot FindItem(Item.ItemType itemType)
+        /// <summary>
+        /// Go through the inventory list to find if we already have the same type
+        /// </summary>
+        /// <param name="query">Item to to match</param>
+        /// <returns></returns>        
+        public T FindItem(T query)
         {
-            foreach (ItemSlot thisSlot in Items)
-            {
-                if (thisSlot.item?.thisItemType == itemType)
-                {
-                    return thisSlot;
-                }
-            }
-            return null;
+            return Items.FirstOrDefault(item => item.Equals(query));
         }
 
-        // Returns null when no slots are available
-        public ItemSlot FindItemOrEmptySlot(Item.ItemType itemType)
+        internal void ModifyItemAt(int index, int count)
         {
-            ItemSlot emptySlot = null;
-            foreach (ItemSlot thisSlot in Items)
+            var item = GetItemAt(index);
+            if (item != null)
             {
-                if (thisSlot.item?.thisItemType == itemType)
-                {
-                    return thisSlot;
-                }
-                else if (thisSlot == null)
-                    emptySlot = thisSlot;
+                item.Count += count;
+                OnInventoryChanged?.Invoke(Items.ToList());
             }
-            return emptySlot;
-        }
-
-        // Returns true/false is there is an empty slot
-        // Out function returns the empty slot
-        public bool FindEmptySlot(out ItemSlot slot)
-        {
-            // Go through the inventory list to find if we already have the same type
-            foreach (ItemSlot thisSlot in Items)
-            {
-                if (thisSlot.item == null)
-                {
-                    slot = thisSlot;
-                    return true;
-                }
-            }
-            slot = null;
-            return false;
         }
     }
 }
