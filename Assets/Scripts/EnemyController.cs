@@ -50,7 +50,6 @@ namespace FunMath
 
         public void Move(float move, float stoppingDistance, Vector3 playerPosition)
         {
-            Debug.Log($"Is enemy grounded: {grounded}");
             //only control the enemy if grounded or airControl is turned on
             if (grounded)
             {

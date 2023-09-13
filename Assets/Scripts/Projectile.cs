@@ -6,7 +6,8 @@ namespace FunMath
 {
     public class Projectile : MonoBehaviour
     {
-        public int Damage = 1;
+        public OperationType Operator;
+        public int Modifier = 1;
 
         // Start is called before the first frame update
         void Start()
@@ -25,7 +26,7 @@ namespace FunMath
             var health = collision.gameObject.GetComponent<Health>();
             if (health)
             {
-                health.ModifyHealth(-Damage);
+                health.ModifyHealth(Operator, Modifier);
             }
         }
     }

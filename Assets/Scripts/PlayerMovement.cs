@@ -12,7 +12,6 @@ namespace FunMath
         float horizontalMove = 0f;
         bool jump = false;
 
-
         public void OnLanding()
         {
             animator.SetBool("IsJumping", false);
@@ -30,6 +29,12 @@ namespace FunMath
                 jump = true;
                 animator.SetBool("IsJumping", true);
             }
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                animator.SetBool("IsAttacking", true);
+
+            }
         }
 
         void FixedUpdate()
@@ -39,6 +44,9 @@ namespace FunMath
             jump = false;
         }
 
-         
+        void OnAttackAnimationFinishTrigger()
+        {
+            animator.SetBool("IsAttacking", false);
+        }
     }
 }

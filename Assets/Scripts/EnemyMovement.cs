@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace FunMath
 {
-    public class EnemyCharacterMovement : MonoBehaviour
+    public class EnemyMovement : MonoBehaviour
     {
         public EnemyController controller;
 
@@ -17,8 +17,7 @@ namespace FunMath
         // Update is called once per frame
         void Update()
         {
-            // Setting to -1 to tell the enemy to move towards the left direction by default.
-            horizontalMove = -1 * moveSpeed;
+            horizontalMove = 1 * moveSpeed;
 
         }
 
