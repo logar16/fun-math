@@ -6,7 +6,6 @@ namespace FunMath
 {
     public class PlayerController : MonoBehaviour
     {
-
         private InventorySelector<OperationItem> operationInventory = new InventorySelector<OperationItem>();
         private InventorySelector<ModifierItem> modifierInventory = new InventorySelector<ModifierItem>();
 
