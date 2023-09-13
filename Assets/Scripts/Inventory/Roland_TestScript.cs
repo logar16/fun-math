@@ -6,20 +6,35 @@ namespace FunMath
 {
     public class Roland_TestScript : MonoBehaviour
     {
-        InventorySelector<ModifierItem> InventorySelector;
+        InventorySelector<ModifierItem> ModifierSelector;
+        InventorySelector<OperationItem> OperatorSelector;
         // Start is called before the first frame update
         void Start()
         {
-            InventorySelector = FindObjectOfType<PlayerController>().GetModifierInventory();
-            InventorySelector.OnSelectionChange += OnSelectionChanged;
-            InventorySelector.GetInventory().OnInventoryChanged += OnInventoryChanged;
+            var player = FindObjectOfType<PlayerController>();
+            ModifierSelector = player.GetModifierSelector();
+            ModifierSelector.OnSelectionChange += OnSelectionChanged;
+            ModifierSelector.GetInventory().OnInventoryChanged += OnModInventoryChanged;
+            OperatorSelector = player.GetOperationSelector();
+            OperatorSelector.OnSelectionChange += OnSelectionChanged;
+            OperatorSelector.GetInventory().OnInventoryChanged += OnOpInventoryChanged;
         }
 
-        private void OnInventoryChanged(List<ModifierItem> Items)
+        private void OnOpInventoryChanged(List<OperationItem> Items)
+        {
+            foreach (var Item in Items)
+            {
+                if (Item != null)
+                    Debug.Log(Item.Operator.ToString());
+            }
+        }
+
+        private void OnModInventoryChanged(List<ModifierItem> Items)
         {
             foreach(var Item in Items)
             {
-                Debug.Log(Item.ToString());
+                if (Item != null)
+                Debug.Log($"Modifier: {Item.Modifier}");
             }
         }
 
@@ -33,15 +48,15 @@ namespace FunMath
         {
             if(Input.GetKeyUp(KeyCode.Q))
             {
-                InventorySelector.SwitchItemLeft();
+                ModifierSelector.SwitchItemLeft();
             }
             else if(Input.GetKeyUp(KeyCode.E))
             {
-                InventorySelector.SwitchItemRight();
+                ModifierSelector.SwitchItemRight();
             }
             else if(Input.GetKeyUp(KeyCode.Space))
             {
-                var ItemSlot = InventorySelector.QueryCurrentItem();
+                var ItemSlot = ModifierSelector.QueryCurrentItem();
                 
                 if(ItemSlot != null)
                 {

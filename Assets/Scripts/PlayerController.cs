@@ -60,12 +60,12 @@ namespace FunMath
             }
         }
 
-        public InventorySelector<OperationItem> GetOperationInventory()
+        public InventorySelector<OperationItem> GetOperationSelector()
         {
             return operationInventory;
         }
 
-        public InventorySelector<ModifierItem> GetModifierInventory()
+        public InventorySelector<ModifierItem> GetModifierSelector()
         {
             return modifierInventory;
         }

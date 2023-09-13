@@ -17,7 +17,7 @@ namespace FunMath
 
         public Inventory(int maxNumberOfTypes = 5)
         {
-            Items = new List<T>(maxNumberOfTypes);
+            Items = new List<T>(new T[maxNumberOfTypes]);
         }
 
         public int GetFilledSlotsCount()
@@ -102,7 +102,7 @@ namespace FunMath
         /// <returns></returns>        
         public T FindItem(T query)
         {
-            return Items.FirstOrDefault(item => item.Equals(query));
+            return Items.FirstOrDefault(item => item != null && item.Equals(query));
         }
 
         internal void ModifyItemAt(int index, int count)
