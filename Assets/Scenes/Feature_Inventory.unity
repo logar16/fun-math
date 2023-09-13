@@ -248,7 +248,6 @@ GameObject:
   - component: {fileID: 1444453891}
   - component: {fileID: 1444453890}
   - component: {fileID: 1444453889}
-  - component: {fileID: 1444453892}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -330,21 +329,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1444453892
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1444453888}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ab84732de9ce0f42b427e1874600e48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxNumberOfItem: 100
-  InfiniteItem: 0
-  Items: []
 --- !u!1001 &1493880505
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -468,10 +452,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2099332615}
-  - component: {fileID: 2099332614}
   - component: {fileID: 2099332616}
   - component: {fileID: 2099332617}
   - component: {fileID: 2099332618}
+  - component: {fileID: 2099332619}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -479,21 +463,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2099332614
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2099332613}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ab84732de9ce0f42b427e1874600e48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxNumberOfItem: 100
-  InfiniteItem: 0
-  Items: []
 --- !u!4 &2099332615
 Transform:
   m_ObjectHideFlags: 0
@@ -633,6 +602,29 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.2}
   m_EdgeRadius: 0
+--- !u!114 &2099332619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099332613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6a4debbf2dc04b44948ba84a8cda26c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 0}
+  jumpForce: 400
+  movementSmoothing: 0.05
+  airControl: 0
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 0
+  groundCheck: {fileID: 0}
+  OnLandEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
