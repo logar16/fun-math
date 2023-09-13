@@ -23,7 +23,7 @@ namespace FunMath
 
         void OnCollisionEnter2D(Collision2D collision)
         {
-            var health = collision.gameObject.GetComponent<Health>();
+            var health = collision.gameObject.GetComponent<HealthCalculator>();
             if (health)
             {
                 health.ModifyHealth(Operator, Modifier);

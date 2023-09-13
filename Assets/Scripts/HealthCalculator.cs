@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace FunMath
 {
-    public class Health : MonoBehaviour
+    public class HealthCalculator : MonoBehaviour
     {
         [SerializeField]
         [Range(0, 100)]

@@ -19,7 +19,7 @@ namespace FunMath
         private void OnTriggerEnter2D(Collider2D collision)
         {
             Debug.Log(collision.name);
-            Health enemyHealth = collision.GetComponent<Health>();
+            HealthCalculator enemyHealth = collision.GetComponent<HealthCalculator>();
             if (enemyHealth != null)
             {
                 // Use hard-coded value for now
