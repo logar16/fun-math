@@ -1,6 +1,7 @@
 using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace FunMath
 {
@@ -31,16 +32,23 @@ namespace FunMath
             }
         }
 
+        // Get the ui image child object
+        private Transform highlight;
+
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
-            
+            highlight = transform.Find("Highlight");
         }
 
-        // Update is called once per frame
-        void Update()
+        public void Select()
         {
-        
+            highlight.gameObject.SetActive(true);
+        }
+
+        public void Deslect()
+        {
+            highlight.gameObject.SetActive(false);
         }
     }
 }
