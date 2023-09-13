@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Characters/Player/Animation/Player_Attack.anim.meta
 guid: 1d76ce7da8210df468c6fdbb074864a4
+========
+guid: d90e4b325893bb3478e2083887e86267
+>>>>>>>> main:Assets/Characters/Player/Animation/Player_Idle.anim.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 7400000
