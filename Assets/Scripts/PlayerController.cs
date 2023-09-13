@@ -52,6 +52,7 @@ namespace FunMath
 
         public void Move(float move, bool jump)
         {
+            Debug.Log($"Is grounded: {grounded}");
             //only control the player if grounded or airControl is turned on
             if (grounded || airControl)
             {
