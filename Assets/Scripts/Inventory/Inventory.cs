@@ -20,6 +20,11 @@ namespace FunMath
             Items = new List<T>(new T[maxNumberOfTypes]);
         }
 
+        public List<T> GetItems()
+        {
+            return Items.ToList();
+        }
+
         public int GetFilledSlotsCount()
         {
             return Items.Count(item => item != null);
@@ -92,7 +97,7 @@ namespace FunMath
                 }
             }
             // emit event after everything is done
-            OnInventoryChanged?.Invoke(Items.ToList());
+            OnInventoryChanged?.Invoke(GetItems());
         }
 
         /// <summary>
