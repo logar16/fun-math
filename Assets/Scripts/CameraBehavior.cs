@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace FunMath
 {
-    public class Camera : MonoBehaviour
+    public class CameraBehavior : MonoBehaviour
     {
         public Transform player;
 

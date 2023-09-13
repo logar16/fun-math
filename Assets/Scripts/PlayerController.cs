@@ -81,7 +81,6 @@ namespace FunMath
 
         public void Move(float move, bool jump)
         {
-            //Debug.Log($"Is grounded: {grounded}");
             //only control the player if grounded or airControl is turned on
             if (grounded || airControl)
             {
@@ -118,10 +117,8 @@ namespace FunMath
             // Switch the way the player is labelled as facing.
             facingRight = !facingRight;
 
-            // Multiply the player's x local scale by -1.
-            Vector3 theScale = transform.localScale;
-            theScale.x *= -1;
-            transform.localScale = theScale;
+            // rotate the player
+            transform.Rotate(0f, 180f, 0f);
         }
     }
 }

@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Characters/Player/Animation/Player_Jump.anim.meta
 guid: 9ecdcae7104c4614eaa45f9eaaca9bd5
+========
+guid: 0b890253f63b12045bc79b0c94c3e86b
+>>>>>>>> main:Assets/Characters/Player/Animation/Player_Run.anim.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 7400000
