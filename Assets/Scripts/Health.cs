@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace FunMath
@@ -8,12 +9,29 @@ namespace FunMath
         [Range(0, 100)]
         int health = 10;
 
-        public void ModifyHealth(int change)
+        public void ModifyHealth(OperationType operation, int modifier)
         {
-            health += change;
-            if (health < 0)
+            switch (operation)
+            {
+                case OperationType.Addition:
+                    health += modifier;
+                    break;
+                case OperationType.Subtraction:
+                    health -= modifier;
+                    break;
+                case OperationType.Multiply:
+                    health *= modifier;
+                    break;
+                case OperationType.Divide:
+                    health = (int)Math.Round((float)modifier / health, 0, MidpointRounding.AwayFromZero);
+                    break;
+            }
+
+
+            if (health == 0)
             {
                 // TODO: Fire death event
+                Debug.Log("You killed it!");
             }
         }
     }
