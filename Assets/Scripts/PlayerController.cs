@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -5,6 +6,16 @@ namespace FunMath
 {
     public class PlayerController : MonoBehaviour
     {
+
+        private InventorySelector<OperationItem> operationInventory = new InventorySelector<OperationItem>();
+        private InventorySelector<ModifierItem> modifierInventory = new InventorySelector<ModifierItem>();
+
+        [SerializeField]
+        private Projectile projectilePrefab;
+
+        [Header("Movement")]
+        [Space]
+
         [SerializeField] private float jumpForce = 400f;                          // Amount of force added when the player jumps.
         [Range(0, .3f)][SerializeField] private float movementSmoothing = .05f;   // How much to smooth out the movement
         [SerializeField] private bool airControl = false;                         // Whether or not a player can steer while jumping;
@@ -49,9 +60,29 @@ namespace FunMath
             }
         }
 
+        public InventorySelector<OperationItem> GetOperationSelector()
+        {
+            return operationInventory;
+        }
+
+        public InventorySelector<ModifierItem> GetModifierSelector()
+        {
+            return modifierInventory;
+        }
+
+        public void Attack()
+        {
+            var operation = operationInventory.QueryCurrentItem().Operator;
+            var modifier = modifierInventory.QueryCurrentItem().Modifier;
+            var projectile = Instantiate(projectilePrefab, transform);
+            projectile.Operator = operation;
+            projectile.Modifier = modifier;
+            // TODO: Launch it!
+        }
 
         public void Move(float move, bool jump)
         {
+            //Debug.Log($"Is grounded: {grounded}");
             //only control the player if grounded or airControl is turned on
             if (grounded || airControl)
             {
