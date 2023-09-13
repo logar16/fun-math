@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1178430151418446779}
+  - component: {fileID: 340270063633589554}
   - component: {fileID: 647816858155276714}
   - component: {fileID: 3403873829556024922}
   - component: {fileID: 8468194318172546057}
-  - component: {fileID: 6887599178398983843}
   m_Layer: 5
-  m_Name: InventoryDisplay
+  m_Name: ModifierInventoryDisplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39,6 +39,19 @@ RectTransform:
   m_AnchoredPosition: {x: -327, y: -49}
   m_SizeDelta: {x: -673.6, y: 84.6}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &340270063633589554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4652545338496007977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 666f2758315174f4daabf34de28274ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prototypeSlotDisplay: {fileID: 8905080251908114711, guid: ce50765569b77014e92cce9000df7f35, type: 3}
 --- !u!222 &647816858155276714
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -103,16 +116,3 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &6887599178398983843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4652545338496007977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77874da5bdd6ac449bb0d3c35c659c54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prototypeSlotDisplay: {fileID: 8905080251908114711, guid: ce50765569b77014e92cce9000df7f35, type: 3}

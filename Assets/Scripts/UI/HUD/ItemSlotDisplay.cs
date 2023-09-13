@@ -12,22 +12,21 @@ namespace FunMath
         [SerializeField]
         private TMP_Text ItemCount;
 
-        private ItemSlot itemSlot;
-        public ItemSlot ItemSlot
+        private Item item;
+        public Item ItemData
         {
             get
             {
-                return itemSlot;
+                return item;
             }
             set
             {
-                itemSlot = value;
-                if (itemSlot != null)
+                item = value;
+                if (item != null)
                 {
                     // Update the text to match the item's name
-                    var options = new string[] {"-", "+", "÷", "x"};
-                    ItemName.text = options[itemSlot.ItemCount];
-                    ItemCount.text = itemSlot.ItemCount.ToString();
+                    ItemName.text = item.Name;
+                    ItemCount.text = item.Count.ToString();
                 }
             }
         }
