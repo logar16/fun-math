@@ -11,6 +11,7 @@ namespace FunMath
             Count += other.Count;
         }
         bool Equals(Item other);
+        string Name { get; }
     }
 
     public enum OperationType
@@ -27,6 +28,24 @@ namespace FunMath
     {
         public OperationType Operator { get; private set; }
         public int Count { get; set; }
+
+        public string Name { get => ConciseName();}
+
+        private string ConciseName()
+        {
+            switch (Operator)
+            {
+                case OperationType.Addition:
+                    return "+";
+                case OperationType.Subtraction:
+                    return "-";
+                case OperationType.Multiply:
+                    return "x";
+                case OperationType.Divide:
+                    return "÷";
+            }
+            return "";
+        }
 
         public OperationItem(OperationType type, int count = 1)
         {
@@ -48,6 +67,8 @@ namespace FunMath
     {
         public int Modifier { get; private set; }
         public int Count { get; set; }
+
+        public string Name => Modifier.ToString();
 
         public ModifierItem(int modifier, int count = 1)
         {
