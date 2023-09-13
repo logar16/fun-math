@@ -8,16 +8,17 @@ namespace FunMath
 
         public GameObject player;
 
-        public float moveSpeed = 40f;
+        public float moveSpeed = 50f;
 
-        public float stoppingDistance = 2f;
+        public float stoppingDistance = 0.5f;
 
         float horizontalMove = 0f;
 
         // Update is called once per frame
         void Update()
         {
-            horizontalMove = 1 * moveSpeed;
+            // Setting the direction of the enemyMovement to be towards the player character.
+            horizontalMove = -1 * moveSpeed;
 
         }
 
