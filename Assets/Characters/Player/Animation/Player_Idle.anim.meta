@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Characters/Player/Animation/Player_Idle.anim.meta
 guid: d90e4b325893bb3478e2083887e86267
+========
+guid: 9ecdcae7104c4614eaa45f9eaaca9bd5
+>>>>>>>> main:Assets/Characters/Player/Animation/Player_Jump.anim.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 7400000
