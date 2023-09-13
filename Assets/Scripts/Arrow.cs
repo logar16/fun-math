@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace FunMath
@@ -8,6 +6,7 @@ namespace FunMath
     {
         public float speed = 20f;
         public Rigidbody2D arrowRigidBody;
+        
 
         // Start is called before the first frame update
         void Start()
@@ -20,6 +19,18 @@ namespace FunMath
         private void OnTriggerEnter2D(Collider2D collision)
         {
             Debug.Log(collision.name);
+            Health enemyHealth = collision.GetComponent<Health>();
+            if (enemyHealth != null)
+            {
+                // Use hard-coded value for now
+                enemyHealth.ModifyHealth(OperationType.Subtraction, 10);
+                gameObject.SetActive(false);
+                Destroy(gameObject);
+            }
+
+            
         }
+
+        
     }
 }

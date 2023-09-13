@@ -9,6 +9,8 @@ namespace FunMath
         [SerializeField] private LayerMask whatIsGround;                          // A mask determining what is ground to the character
         [SerializeField] private Transform groundCheck;                           // A position marking where to check if the enemy is grounded.
 
+        public GameObject deathEffect;
+
         const float GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
         private bool grounded;            // Whether or not the enemy is grounded.
         private Rigidbody2D rigidBody;
@@ -19,34 +21,6 @@ namespace FunMath
         [Space]
 
         public UnityEvent OnLandEvent;
-
-        private void Awake()
-        {
-            rigidBody = GetComponent<Rigidbody2D>();
-
-            if (OnLandEvent == null)
-                OnLandEvent = new UnityEvent();
-        }
-
-        private void FixedUpdate()
-        {
-            bool wasGrounded = grounded;
-            grounded = false;
-
-            // The enemy is grounded if a circlecast to the groundcheck position hits anything designated as ground
-            // This can be done using layers instead but Sample Assets will not overwrite your project settings.
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, GroundedRadius, whatIsGround);
-            for (int i = 0; i < colliders.Length; i++)
-            {
-                if (colliders[i].gameObject != gameObject)
-                {
-                    grounded = true;
-                    if (!wasGrounded)
-                        OnLandEvent.Invoke();
-                }
-            }
-        }
-
 
         public void Move(float move, float stoppingDistance, Vector3 playerPosition)
         {
@@ -78,6 +52,32 @@ namespace FunMath
             }
         }
 
+        private void Awake()
+        {
+            rigidBody = GetComponent<Rigidbody2D>();
+
+            if (OnLandEvent == null)
+                OnLandEvent = new UnityEvent();
+        }
+
+        private void FixedUpdate()
+        {
+            bool wasGrounded = grounded;
+            grounded = false;
+
+            // The enemy is grounded if a circlecast to the groundcheck position hits anything designated as ground
+            // This can be done using layers instead but Sample Assets will not overwrite your project settings.
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, GroundedRadius, whatIsGround);
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                if (colliders[i].gameObject != gameObject)
+                {
+                    grounded = true;
+                    if (!wasGrounded)
+                        OnLandEvent.Invoke();
+                }
+            }
+        }
 
         private void Flip()
         {
@@ -88,6 +88,12 @@ namespace FunMath
             Vector3 theScale = transform.localScale;
             theScale.x *= -1;
             transform.localScale = theScale;
+        }
+
+        private void Die()
+        {
+            
+            Destroy(gameObject);
         }
     }
 }

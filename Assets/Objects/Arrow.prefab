@@ -172,4 +172,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
+  damage: 20
   arrowRigidBody: {fileID: 5316564557807724921}
