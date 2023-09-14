@@ -8,6 +8,7 @@ namespace FunMath
     {
         public Transform firePoint;
         public GameObject arrowPrefab;
+        public HealthBar HealthBar;
 
         private InventorySelector<OperationItem> operationInventory = new InventorySelector<OperationItem>(4);
         private InventorySelector<ModifierItem> modifierInventory = new InventorySelector<ModifierItem>(5);
@@ -45,6 +46,7 @@ namespace FunMath
         private void Awake()
         {
             rigidBody = GetComponent<Rigidbody2D>();
+            HealthBar = GetComponentInChildren<HealthBar>();
 
             if (OnLandEvent == null)
                 OnLandEvent = new UnityEvent();
