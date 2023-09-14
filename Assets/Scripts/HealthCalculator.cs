@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace FunMath
 {
-    public class Health : MonoBehaviour
+    public class HealthCalculator : MonoBehaviour
     {
         [SerializeField]
         [Range(0, 100)]
@@ -27,11 +27,10 @@ namespace FunMath
                     break;
             }
 
-
+            Debug.Log($"{gameObject} health :{health}");
             if (health == 0)
             {
-                // TODO: Fire death event
-                Debug.Log("You killed it!");
+                Destroy(gameObject);
             }
         }
     }
