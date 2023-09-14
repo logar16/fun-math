@@ -19,8 +19,8 @@ namespace FunMath
         public delegate void HealthChanged(OnHealthChangeData onHealthChangeData);
         public event HealthChanged OnHealthChanged;
 
-        [SerializeField][Range(0, 100)] private int health = 100;
-        private readonly int maxHealth = 100;
+        [SerializeField][Range(-50, 50)] private int health = 50;
+        private readonly int maxHealth = 50;
 
         public bool IsNegativeHealth()
         {
@@ -46,10 +46,7 @@ namespace FunMath
                     break;
             }
 
-            if (health > maxHealth)
-            {
-                health = maxHealth; 
-            }
+            health = Mathf.Clamp(health, -maxHealth, maxHealth);
 
             CheckHealth();
 
