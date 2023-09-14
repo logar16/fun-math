@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace FunMath
@@ -50,6 +51,9 @@ namespace FunMath
             Debug.Log($"{gameObject} health :{health}");
             if (health == 0)
             {
+                // Start the coroutine to handle the delay before destroying the GameObject
+                StartCoroutine(DestroyAfterDelay(2.0f));
+
                 // Note: This script doesn't distinguish between player and enemy contexts. Please ensure both player/enemy
                 // prefabs have an attached animator and include the praramter 'IsDead' to transition into the dying animation.
                 Animator animator = gameObject.GetComponent<Animator>();
@@ -68,6 +72,11 @@ namespace FunMath
             OnHealthChanged?.Invoke(data);
         }
 
-
+        private IEnumerator DestroyAfterDelay(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            // Destroy the GameObject after the delay
+            Destroy(gameObject);
+        }
     }
 }
