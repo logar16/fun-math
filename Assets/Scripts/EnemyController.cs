@@ -14,7 +14,6 @@ namespace FunMath
         const float GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
         private bool grounded;            // Whether or not the enemy is grounded.
         private Rigidbody2D rigidBody;
-        private bool facingLeft = true;  // For determining which way the enemy is currently facing.
         private Vector3 velocity = Vector3.zero;
         private Animator anim;
         private SpriteRenderer spriteRenderer;
