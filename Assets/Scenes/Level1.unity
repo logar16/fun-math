@@ -459,6 +459,26 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 2004995808}
+    - target: {fileID: 3638972425145147040, guid: 133aa5ad1904ee64e959927f36b6a66c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 97eb9d0b02bba744d9b5577eb78591f3, type: 2}
+    - target: {fileID: 5317557692774926908, guid: 133aa5ad1904ee64e959927f36b6a66c, type: 3}
+      propertyPath: InversedColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317557692774926908, guid: 133aa5ad1904ee64e959927f36b6a66c, type: 3}
+      propertyPath: InversedColor.b
+      value: 0.69803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317557692774926908, guid: 133aa5ad1904ee64e959927f36b6a66c, type: 3}
+      propertyPath: InversedColor.g
+      value: 0.7372549
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317557692774926908, guid: 133aa5ad1904ee64e959927f36b6a66c, type: 3}
+      propertyPath: InversedColor.r
+      value: 0.29411766
+      objectReference: {fileID: 0}
     - target: {fileID: 5329896382505643821, guid: 133aa5ad1904ee64e959927f36b6a66c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10.29

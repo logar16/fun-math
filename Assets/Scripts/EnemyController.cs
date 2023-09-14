@@ -23,6 +23,8 @@ namespace FunMath
 
         public UnityEvent OnLandEvent;
 
+        public Color InversedColor;
+
         public void Move(float move, float stoppingDistance, Vector3 playerPosition)
         {
             //only control the enemy if grounded or airControl is turned on
@@ -79,6 +81,17 @@ namespace FunMath
                         OnLandEvent.Invoke();
                 }
             }
+
+            // If health is negative, show inversed colors
+            if(GetComponent<HealthCalculator>().IsNegativeHealth())
+            {
+                // Tint is inversed
+                GetComponent<SpriteRenderer>().color = InversedColor;
+            }
+            else
+            {
+                GetComponent<SpriteRenderer>().color = Color.white;
+            }
         }
 
         private void Flip()
@@ -96,6 +109,12 @@ namespace FunMath
         {
             
             Destroy(gameObject);
+        }
+
+        private void Update()
+        {
+            // Determine whether to show negative colors of creature
+
         }
     }
 }
