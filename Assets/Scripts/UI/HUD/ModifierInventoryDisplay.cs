@@ -11,6 +11,9 @@ namespace FunMath
         [SerializeField]
         private ItemSlotDisplay prototypeSlotDisplay;
 
+        [SerializeField]
+        private ItemSlotDisplay.HighlighColor highlighColor = ItemSlotDisplay.HighlighColor.Yellow;
+
         // Start is called before the first frame update
         void Awake()
         {
@@ -27,7 +30,7 @@ namespace FunMath
             }
 
             if (itemSlotDisplays.Count > 0)
-                itemSlotDisplays[0].Select(ItemSlotDisplay.HighlighColor.Blue);
+                itemSlotDisplays[0].Select(highlighColor);
         }
 
         private void OnEnable()
@@ -59,7 +62,7 @@ namespace FunMath
             {
                 display.Deslect();
             }
-            itemSlotDisplays[index].Select(ItemSlotDisplay.HighlighColor.Blue);
+            itemSlotDisplays[index].Select(highlighColor);
         }
     }
 }
