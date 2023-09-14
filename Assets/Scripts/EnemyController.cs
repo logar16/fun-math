@@ -16,6 +16,7 @@ namespace FunMath
         private Rigidbody2D rigidBody;
         private bool facingLeft = true;  // For determining which way the enemy is currently facing.
         private Vector3 velocity = Vector3.zero;
+        private Animator anim;
 
         [Header("Events")]
         [Space]
@@ -28,13 +29,14 @@ namespace FunMath
             if (grounded)
             {
                 // Move the character by finding the target velocity
-                Vector3 targetVelocity = new Vector2(move * 2f, rigidBody.velocity.y);
+                Vector3 targetVelocity = new Vector2(move * 5f, rigidBody.velocity.y);
                 // And then smoothing it out and applying it to the character
                 rigidBody.velocity = Vector3.SmoothDamp(rigidBody.velocity, targetVelocity, ref velocity, movementSmoothing);       
 
-                if (Vector2.Distance(transform.position, playerPosition) <= stoppingDistance)
+                if (Vector2.Distance(transform.position, playerPosition) < stoppingDistance)
                 {
                     rigidBody.velocity = Vector3.zero;
+                    anim.SetBool("IsAttacking", true);
                 }
 
                 // If the enemy is moving left and the enemy is facing right...
