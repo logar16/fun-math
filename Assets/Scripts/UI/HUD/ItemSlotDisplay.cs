@@ -32,22 +32,48 @@ namespace FunMath
         }
 
         // Get the ui image child object
-        private Transform highlight;
+        private Transform highlightYellow;
+        private Transform highlightBlue;
+        private Transform highlightGreen;
+
+        public enum HighlighColor
+        {
+            Yellow,
+            Blue,
+            Green
+        }
 
         // Start is called before the first frame update
         void Awake()
         {
-            highlight = transform.Find("Highlight");
+            highlightYellow = transform.Find("HighlightYellow");
+            highlightBlue = transform.Find("HighlightBlue");
+            highlightGreen = transform.Find("HighlightGreen");
         }
 
-        public void Select()
+        public void Select(HighlighColor color = HighlighColor.Yellow)
         {
-            highlight.gameObject.SetActive(true);
+            switch (color)
+            {
+                case HighlighColor.Yellow:
+                    highlightYellow.gameObject.SetActive(true);
+                    break;
+                case HighlighColor.Blue:
+                    highlightBlue.gameObject.SetActive(true);
+                    break;
+                case HighlighColor.Green:
+                    highlightGreen.gameObject.SetActive(true);
+                    break;
+                default:
+                    break;
+            }
         }
 
         public void Deslect()
         {
-            highlight.gameObject.SetActive(false);
+            highlightYellow.gameObject.SetActive(false);
+            highlightBlue.gameObject.SetActive(false);
+            highlightGreen.gameObject.SetActive(false);
         }
     }
 }
