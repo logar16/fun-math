@@ -6,11 +6,11 @@ namespace FunMath
 {
     public class PlayerController : MonoBehaviour
     {
+        public Transform firePoint;
+        public GameObject arrowPrefab;
+
         private InventorySelector<OperationItem> operationInventory = new InventorySelector<OperationItem>(4);
         private InventorySelector<ModifierItem> modifierInventory = new InventorySelector<ModifierItem>(5);
-
-        [SerializeField]
-        private Arrow arrowPrefab;
 
         [Header("Movement")]
         [Space]
@@ -32,6 +32,16 @@ namespace FunMath
 
         public UnityEvent OnLandEvent;
 
+        public InventorySelector<OperationItem> OperationSelector
+        {
+            get { return operationInventory; }
+        }
+
+        public InventorySelector<ModifierItem> ModifierSelector
+        {
+            get { return modifierInventory; }
+        }
+
         private void Awake()
         {
             rigidBody = GetComponent<Rigidbody2D>();
@@ -40,14 +50,14 @@ namespace FunMath
                 OnLandEvent = new UnityEvent();
 
             operationInventory.AddItem(new OperationItem(OperationType.Subtraction, 99));
-            //operationInventory.AddItem(new OperationItem(OperationType.Addition, 2));
-            //operationInventory.AddItem(new OperationItem(OperationType.Divide, 2));
-            //operationInventory.AddItem(new OperationItem(OperationType.Multiply, 2));
+            operationInventory.AddItem(new OperationItem(OperationType.Addition, 2));
+            operationInventory.AddItem(new OperationItem(OperationType.Divide, 2));
+            operationInventory.AddItem(new OperationItem(OperationType.Multiply, 2));
             modifierInventory.AddItem(new ModifierItem(1, 99));
-            //modifierInventory.AddItem(new ModifierItem(2, 3));
-            //modifierInventory.AddItem(new ModifierItem(3, 2));
-            //modifierInventory.AddItem(new ModifierItem(4, 1));
-            //modifierInventory.AddItem(new ModifierItem(5, 0));
+            modifierInventory.AddItem(new ModifierItem(2, 3));
+            modifierInventory.AddItem(new ModifierItem(3, 2));
+            modifierInventory.AddItem(new ModifierItem(4, 1));
+            modifierInventory.AddItem(new ModifierItem(5, 0));
         }
 
         void Update()
@@ -109,16 +119,6 @@ namespace FunMath
             }
         }
 
-        public InventorySelector<OperationItem> GetOperationSelector()
-        {
-            return operationInventory;
-        }
-
-        public InventorySelector<ModifierItem> GetModifierSelector()
-        {
-            return modifierInventory;
-        }
-
         public void Move(float move, bool jump)
         {
             //only control the player if grounded or airControl is turned on
@@ -159,6 +159,46 @@ namespace FunMath
 
             // rotate the player
             transform.Rotate(0f, 180f, 0f);
+        }
+
+        private void ShootArrow()
+        {
+            if (CheckArrowData())
+            {
+                Instantiate(arrowPrefab, firePoint.position, firePoint.rotation);
+            }
+        }
+
+        private bool CheckArrowData()
+        {
+            // Load current operator and modifier
+            OperationItem operationItem = OperationSelector.QueryCurrentItem();
+            ModifierItem modifierItem = ModifierSelector.QueryCurrentItem();
+            
+            if (operationItem.Count == 0 || modifierItem.Count == 0)
+            {
+                Debug.Log("Cannot attack because current operation count or modifier count is 0.");
+                Debug.Log($"operation item count: {operationItem.Count}");
+                Debug.Log($"modifier item count: {modifierItem.Count}");
+
+                return false;
+            }
+
+            OperationType operation = operationItem.Operator;
+            int modifier = modifierItem.Modifier;
+
+            // reduce item count
+            OperationSelector.UseCurrentItem();
+            ModifierSelector.UseCurrentItem();            
+
+            Arrow arrow = arrowPrefab.GetComponent<Arrow>();
+            arrow.Operator = operation;
+            arrow.Modifier = modifier;
+
+            Debug.Log($"operation: {operation}");
+            Debug.Log($"modifier: {modifier}");
+
+            return true;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace FunMath
         // Start is called before the first frame update
         void Start()
         {
-            selector = FindAnyObjectByType<PlayerController>().GetModifierSelector();
+            selector = FindAnyObjectByType<PlayerController>().ModifierSelector;
             selector.OnSelectionChange += OnSelectionChange;
             var inventory = selector.GetInventory();
             inventory.OnInventoryChanged += OnInventoryChanged;
