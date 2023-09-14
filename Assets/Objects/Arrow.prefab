@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5316564557807724921}
   - component: {fileID: 7102991357798644302}
   - component: {fileID: 4327983784742058621}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -172,5 +172,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
-  damage: 20
   arrowRigidBody: {fileID: 5316564557807724921}
+  Operator: 0
+  Modifier: 1
