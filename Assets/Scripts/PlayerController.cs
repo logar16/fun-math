@@ -10,7 +10,7 @@ namespace FunMath
         private InventorySelector<ModifierItem> modifierInventory = new InventorySelector<ModifierItem>(5);
 
         [SerializeField]
-        private Projectile projectilePrefab;
+        private Arrow arrowPrefab;
 
         [Header("Movement")]
         [Space]
@@ -40,14 +40,14 @@ namespace FunMath
                 OnLandEvent = new UnityEvent();
 
             operationInventory.AddItem(new OperationItem(OperationType.Subtraction, 99));
-            operationInventory.AddItem(new OperationItem(OperationType.Addition, 2));
-            operationInventory.AddItem(new OperationItem(OperationType.Divide, 2));
-            operationInventory.AddItem(new OperationItem(OperationType.Multiply, 2));
+            //operationInventory.AddItem(new OperationItem(OperationType.Addition, 2));
+            //operationInventory.AddItem(new OperationItem(OperationType.Divide, 2));
+            //operationInventory.AddItem(new OperationItem(OperationType.Multiply, 2));
             modifierInventory.AddItem(new ModifierItem(1, 99));
-            modifierInventory.AddItem(new ModifierItem(2, 3));
-            modifierInventory.AddItem(new ModifierItem(3, 2));
-            modifierInventory.AddItem(new ModifierItem(4, 1));
-            modifierInventory.AddItem(new ModifierItem(5, 0));
+            //modifierInventory.AddItem(new ModifierItem(2, 3));
+            //modifierInventory.AddItem(new ModifierItem(3, 2));
+            //modifierInventory.AddItem(new ModifierItem(4, 1));
+            //modifierInventory.AddItem(new ModifierItem(5, 0));
         }
 
         void Update()
@@ -117,16 +117,6 @@ namespace FunMath
         public InventorySelector<ModifierItem> GetModifierSelector()
         {
             return modifierInventory;
-        }
-
-        public void Attack()
-        {
-            var operation = operationInventory.QueryCurrentItem().Operator;
-            var modifier = modifierInventory.QueryCurrentItem().Modifier;
-            var projectile = Instantiate(projectilePrefab, transform);
-            projectile.Operator = operation;
-            projectile.Modifier = modifier;
-            // TODO: Launch it!
         }
 
         public void Move(float move, bool jump)

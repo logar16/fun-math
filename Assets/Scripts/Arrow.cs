@@ -6,7 +6,9 @@ namespace FunMath
     {
         public float speed = 20f;
         public Rigidbody2D arrowRigidBody;
-        
+
+        public OperationType Operator;
+        public int Modifier = 1;
 
         // Start is called before the first frame update
         void Start()
@@ -23,7 +25,7 @@ namespace FunMath
             if (enemyHealth != null)
             {
                 // Use hard-coded value for now
-                enemyHealth.ModifyHealth(OperationType.Subtraction, 10);
+                enemyHealth.ModifyHealth(Operator, Modifier);
                 gameObject.SetActive(false);
                 Destroy(gameObject);
             }
