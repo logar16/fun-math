@@ -67,10 +67,15 @@ namespace FunMath
         {
             if(collision != null)
             {
-                if (collision.CompareTag("AttackArrow"))
-                {                   
-                    controller.ReceiveAttack();
+                if (arrow != null)
+                {
+                    controller.ReceiveAttack(arrow.Operator, arrow.Modifier);
                 }
+                
+                //if (collision.CompareTag("AttackArrow"))
+                //{                   
+                 //   controller.ReceiveAttack();
+                //}
             }
         }
     }

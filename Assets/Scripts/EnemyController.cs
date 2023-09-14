@@ -90,26 +90,11 @@ namespace FunMath
         {
             rigidBody.AddForce(distance * 2.0f, ForceMode2D.Impulse);
         }
-        public void ReceiveAttack()
+        public void ReceiveAttack(OperationType operation, int modifier)
         {
             Debug.Log("Enemy has been hit");
             health.ModifyHealth(OperationType.Subtraction, 5);
-            if (health.getCurrentHealth() == 0)
-            {
-                anim.SetBool("IsDead", true);
-                Debug.Log("You are dead");
-
-                // Start the coroutine to handle the delay before destroying the GameObject
-                StartCoroutine(DestroyAfterDelay(3.0f));
-            }
-        }
-
-        private IEnumerator DestroyAfterDelay(float delay)
-        {
-            yield return new WaitForSeconds(delay);
-
-            // Destroy the GameObject after the delay
-            Destroy(gameObject);
+            Debug.Log("You are dead");                      
         }
     }
 }
