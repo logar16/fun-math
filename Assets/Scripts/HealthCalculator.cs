@@ -19,9 +19,15 @@ namespace FunMath
         public delegate void HealthChanged(OnHealthChangeData onHealthChangeData);
         public event HealthChanged OnHealthChanged;
 
+
         [SerializeField]
-        [Range(0, 100)]
+        [Range(-50, 50)]
         int health = 10;
+
+        public bool IsNegativeHealth()
+        {
+            return health < 0;
+        }
 
         public void ModifyHealth(OperationType operation, int modifier)
         {
