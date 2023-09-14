@@ -14,6 +14,8 @@ namespace FunMath
 
         private Vector3 direction;
 
+        private Arrow arrow;
+
         private void Start()
         {
             player = FindObjectOfType<PlayerController>().GetComponent<Transform>();
@@ -21,6 +23,7 @@ namespace FunMath
             {
                 Debug.Log("Player is not available");
             }
+            arrow = FindObjectOfType<Arrow>();
         }
         // Update is called once per frame       
         void Update()
@@ -66,7 +69,7 @@ namespace FunMath
             {
                 if (collision.CompareTag("AttackArrow"))
                 {                   
-                    controller.Die();
+                    controller.ReceiveAttack();
                 }
             }
         }

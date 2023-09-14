@@ -90,11 +90,11 @@ namespace FunMath
         {
             rigidBody.AddForce(distance * 2.0f, ForceMode2D.Impulse);
         }
-        public void Die()
+        public void ReceiveAttack()
         {
             Debug.Log("Enemy has been hit");
             health.ModifyHealth(OperationType.Subtraction, 5);
-            if (health.getCurrentHealth() <= 0)
+            if (health.getCurrentHealth() == 0)
             {
                 anim.SetBool("IsDead", true);
                 Debug.Log("You are dead");
