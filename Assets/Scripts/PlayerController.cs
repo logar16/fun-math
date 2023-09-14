@@ -10,7 +10,7 @@ namespace FunMath
         private InventorySelector<ModifierItem> modifierInventory = new InventorySelector<ModifierItem>();
 
         [SerializeField]
-        private Projectile projectilePrefab;
+        private Arrow arrowPrefab;
 
         [Header("Movement")]
         [Space]
@@ -67,16 +67,6 @@ namespace FunMath
         public InventorySelector<ModifierItem> GetModifierSelector()
         {
             return modifierInventory;
-        }
-
-        public void Attack()
-        {
-            var operation = operationInventory.QueryCurrentItem().Operator;
-            var modifier = modifierInventory.QueryCurrentItem().Modifier;
-            var projectile = Instantiate(projectilePrefab, transform);
-            projectile.Operator = operation;
-            projectile.Modifier = modifier;
-            // TODO: Launch it!
         }
 
         public void Move(float move, bool jump)

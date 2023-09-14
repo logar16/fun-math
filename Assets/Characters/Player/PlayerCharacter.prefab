@@ -168,6 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6a4debbf2dc04b44948ba84a8cda26c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  arrowPrefab: {fileID: 0}
   jumpForce: 650
   movementSmoothing: 0.05
   airControl: 1
