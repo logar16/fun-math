@@ -161,6 +161,9 @@ namespace FunMath
             transform.Rotate(0f, 180f, 0f);
         }
 
+        /// <summary>
+        /// Used by the animation
+        /// </summary>
         private void ShootArrow()
         {
             if (CheckArrowData())
