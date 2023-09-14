@@ -30,7 +30,7 @@ namespace FunMath
                 animator.SetBool("IsJumping", true);
             }
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && controller.CheckArrowData())
             {
                 animator.SetBool("IsAttacking", true);
 

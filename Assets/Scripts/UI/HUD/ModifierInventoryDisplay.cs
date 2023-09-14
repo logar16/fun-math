@@ -14,7 +14,8 @@ namespace FunMath
         // Start is called before the first frame update
         void Awake()
         {
-            selector = FindAnyObjectByType<PlayerController>().GetModifierSelector();
+            selector = FindAnyObjectByType<PlayerController>().ModifierSelector;
+            selector.OnSelectionChange += OnSelectionChange;
             var inventory = selector.GetInventory();
             var items = inventory.GetItems();
             itemSlotDisplays = new List<ItemSlotDisplay>();
@@ -31,7 +32,7 @@ namespace FunMath
 
         private void OnEnable()
         {
-            selector = selector ?? FindAnyObjectByType<PlayerController>().GetModifierSelector();
+            selector = selector ?? FindAnyObjectByType<PlayerController>().ModifierSelector;
             selector.OnSelectionChange += OnSelectionChange;
             var inventory = selector.GetInventory();
             inventory.OnInventoryChanged += OnInventoryChanged;

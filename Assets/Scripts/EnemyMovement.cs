@@ -18,7 +18,7 @@ namespace FunMath
         void Update()
         {
             // Setting the direction of the enemyMovement to be towards the player character.
-            horizontalMove = -1 * moveSpeed;
+            horizontalMove = 0 * moveSpeed;
 
         }
 

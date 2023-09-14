@@ -14,7 +14,8 @@ namespace FunMath
         // Start is called before the first frame update
         void Awake()
         {
-            selector = FindAnyObjectByType<PlayerController>().GetOperationSelector();
+            selector = FindAnyObjectByType<PlayerController>().OperationSelector;
+            selector.OnSelectionChange += OnSelectionChange;
             var inventory = selector.GetInventory();
             var items = inventory.GetItems();
             itemSlotDisplays = new List<ItemSlotDisplay>();
