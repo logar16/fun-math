@@ -34,5 +34,10 @@ namespace FunMath
                 Debug.Log("You killed it!");
             }
         }
+
+        public int getCurrentHealth()
+        {
+            return health;
+        }
     }
 }

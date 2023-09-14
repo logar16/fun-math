@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,10 +13,10 @@ namespace FunMath
         const float GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
         private bool grounded;            // Whether or not the enemy is grounded.
         private Rigidbody2D rigidBody;
-        private bool facingLeft = true;  // For determining which way the enemy is currently facing.
         private Vector3 velocity = Vector3.zero;
         private Animator anim;
-
+        private SpriteRenderer spriteRenderer;
+        private Health health;
         [Header("Events")]
         [Space]
 
@@ -24,6 +25,8 @@ namespace FunMath
         private void Awake()
         {
             anim = GetComponent<Animator>();
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            health = gameObject.GetComponent<Health>();
             anim.SetBool("IsRunning", true);
             rigidBody = GetComponent<Rigidbody2D>();
             if (OnLandEvent == null)
@@ -50,47 +53,61 @@ namespace FunMath
         }
 
 
-        public void Move(float move, float stoppingDistance, Vector3 playerPosition)
+        public void Move(float move, float stoppingDistance, Vector3 direction, Vector3 playerPosition)
         {
             //only control the enemy if grounded or airControl is turned on
             if (grounded)
             {
                 // Move the character by finding the target velocity
-                Vector3 targetVelocity = new Vector2(move * 5f, rigidBody.velocity.y);
+                Vector3 targetVelocity = new Vector2(move * 5f, rigidBody.velocity.y) * direction;
                 // And then smoothing it out and applying it to the character
-                rigidBody.velocity = Vector3.SmoothDamp(rigidBody.velocity, targetVelocity, ref velocity, movementSmoothing);       
+                rigidBody.velocity = Vector3.SmoothDamp(rigidBody.velocity, targetVelocity, ref velocity, movementSmoothing);
 
-                if (Vector2.Distance(transform.position, playerPosition) < stoppingDistance)
+                if (Vector2.Distance(transform.position, playerPosition) <= stoppingDistance)
                 {
                     rigidBody.velocity = Vector3.zero;
                     anim.SetBool("IsAttacking", true);
                 }
 
                 // If the enemy is moving left and the enemy is facing right...
-                if (move > 0 && facingLeft)
+                if (rigidBody.velocity.x < 0)
                 {
                     // ... flip the enemy.
-                    Flip();
+                    spriteRenderer.flipX = true;
                 }
                 // Otherwise if the enemy is moving the right and the enemy is facing left...
-                else if (move < 0 && !facingLeft)
+                else if (rigidBody.velocity.x > 0)
                 {
                     // ... flip the enemy.
-                    Flip();
+                    spriteRenderer.flipX = false;
                 }
             }
         }
 
-
-        private void Flip()
+        public void MoveAway(Vector2 distance)
         {
-            // Switch the way the enemy is labelled as facing.
-            facingLeft = !facingLeft;
+            rigidBody.AddForce(distance * 2.0f, ForceMode2D.Impulse);
+        }
+        public void Die()
+        {
+            Debug.Log("Enemy has been hit");
+            health.ModifyHealth(OperationType.Subtraction, 5);
+            if (health.getCurrentHealth() <= 0)
+            {
+                anim.SetBool("IsDead", true);
+                Debug.Log("You are dead");
 
-            // Multiply the enemy's x local scale by -1.
-            Vector3 theScale = transform.localScale;
-            theScale.x *= -1;
-            transform.localScale = theScale;
+                // Start the coroutine to handle the delay before destroying the GameObject
+                StartCoroutine(DestroyAfterDelay(3.0f));
+            }
+        }
+
+        private IEnumerator DestroyAfterDelay(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+
+            // Destroy the GameObject after the delay
+            Destroy(gameObject);
         }
     }
 }
