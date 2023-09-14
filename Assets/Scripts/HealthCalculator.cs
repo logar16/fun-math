@@ -28,9 +28,19 @@ namespace FunMath
             }
 
             Debug.Log($"{gameObject} health :{health}");
+        }
+
+        private void Update()
+        {
             if (health == 0)
             {
-                Destroy(gameObject);
+                // Note: This script doesn't distinguish between player and enemy contexts. Please ensure both player/enemy
+                // prefabs have an attached animator and include the praramter 'IsDead' to transition into the dying animation.
+                Animator animator = gameObject.GetComponent<Animator>();
+                animator.SetBool("IsDead", true);
+
+                // TODO: move destroy as an animation trigger
+                // Destroy(gameObject);
             }
         }
     }
