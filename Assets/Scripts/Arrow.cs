@@ -24,15 +24,9 @@ namespace FunMath
             HealthCalculator enemyHealth = collision.GetComponent<HealthCalculator>();
             if (enemyHealth != null)
             {
-                // Use hard-coded value for now
                 enemyHealth.ModifyHealth(Operator, Modifier);
-                gameObject.SetActive(false);
                 Destroy(gameObject);
             }
-
-            
         }
-
-        
     }
 }

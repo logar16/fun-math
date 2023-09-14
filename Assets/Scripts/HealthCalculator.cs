@@ -56,6 +56,7 @@ namespace FunMath
                 // TODO: move destroy as an animation trigger
                 // Destroy(gameObject);
             }
+
             OnHealthChangeData data = new OnHealthChangeData();
             data.Operation = operation;
             data.Modifier = modifier;
