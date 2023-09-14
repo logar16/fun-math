@@ -6,8 +6,8 @@ namespace FunMath
 {
     public class PlayerController : MonoBehaviour
     {
-        private InventorySelector<OperationItem> operationInventory = new InventorySelector<OperationItem>();
-        private InventorySelector<ModifierItem> modifierInventory = new InventorySelector<ModifierItem>();
+        private InventorySelector<OperationItem> operationInventory = new InventorySelector<OperationItem>(4);
+        private InventorySelector<ModifierItem> modifierInventory = new InventorySelector<ModifierItem>(5);
 
         [SerializeField]
         private Projectile projectilePrefab;
@@ -38,6 +38,56 @@ namespace FunMath
 
             if (OnLandEvent == null)
                 OnLandEvent = new UnityEvent();
+
+            operationInventory.AddItem(new OperationItem(OperationType.Subtraction, 99));
+            //operationInventory.AddItem(new OperationItem(OperationType.Addition, 2));
+            //operationInventory.AddItem(new OperationItem(OperationType.Divide, 2));
+            //operationInventory.AddItem(new OperationItem(OperationType.Multiply, 2));
+            modifierInventory.AddItem(new ModifierItem(1, 99));
+            //modifierInventory.AddItem(new ModifierItem(2, 3));
+            //modifierInventory.AddItem(new ModifierItem(3, 2));
+            //modifierInventory.AddItem(new ModifierItem(4, 1));
+            //modifierInventory.AddItem(new ModifierItem(5, 0));
+        }
+
+        void Update()
+        {
+            CheckInventorySelectionChange();
+        }
+
+        private void CheckInventorySelectionChange()
+        {
+            // Modifier Selection (use 1-5 keys)
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                modifierInventory.SelectIndex(0);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                modifierInventory.SelectIndex(1);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                modifierInventory.SelectIndex(2);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                modifierInventory.SelectIndex(3);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                modifierInventory.SelectIndex(4);
+            }
+
+            // Operation Selection (use Q and E keys)
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                operationInventory.SwitchItemLeft();
+            }
+            else if (Input.GetKeyDown(KeyCode.E))
+            {
+                operationInventory.SwitchItemRight();
+            }
         }
 
         private void FixedUpdate()

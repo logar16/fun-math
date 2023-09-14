@@ -19,9 +19,17 @@ namespace FunMath
         public event SelectionChanged OnSelectionChange;
 
 
-        public InventorySelector()
+        public InventorySelector(int maxNumberOfTypes)
         {
-            data = new Inventory<T>();
+            data = new Inventory<T>(maxNumberOfTypes);
+        }
+
+        public void SelectIndex(int index)
+        {
+            if (index < 0 || index >= data.GetFilledSlotsCount())
+                return;
+            this.index = index;
+            OnSelectionChange?.Invoke(index);
         }
 
         public void SwitchItemRight()
@@ -41,15 +49,12 @@ namespace FunMath
 
         public void SwitchItemLeft()
         {
+            index--;
             // Round back to count-1 when at leftmost slot
-            if (index - 1 < 0)
+            if (index < 0)
             {
-                index = data.GetFilledSlotsCount() - 1;
-            }
-            else
-            {
-                // Decrease index (moves left)
-                index--;
+                // If we don't have anything in our slots yet, we leave at zero.
+                index = Mathf.Max(0, data.GetFilledSlotsCount() - 1);
             }
             OnSelectionChange?.Invoke(index);
         }
