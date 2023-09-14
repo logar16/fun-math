@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace FunMath
@@ -20,6 +21,11 @@ namespace FunMath
 
         [SerializeField][Range(0, 100)] private int health = 100;
         private readonly int maxHealth = 100;
+
+        public bool IsNegativeHealth()
+        {
+            return health < 0;
+        }
 
         public void ModifyHealth(OperationType operation, int modifier)
         {

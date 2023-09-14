@@ -14,52 +14,34 @@ namespace FunMath
         const float GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
         private bool grounded;            // Whether or not the enemy is grounded.
         private Rigidbody2D rigidBody;
-        private bool facingLeft = true;  // For determining which way the enemy is currently facing.
         private Vector3 velocity = Vector3.zero;
         private Animator anim;
+        private SpriteRenderer spriteRenderer;
+        private HealthCalculator health;
 
         [Header("Events")]
         [Space]
 
         public UnityEvent OnLandEvent;
 
-        public void Move(float move, float stoppingDistance, Vector3 playerPosition)
-        {
-            //only control the enemy if grounded or airControl is turned on
-            if (grounded)
-            {
-                // Move the character by finding the target velocity
-                Vector3 targetVelocity = new Vector2(move * 5f, rigidBody.velocity.y);
-                // And then smoothing it out and applying it to the character
-                rigidBody.velocity = Vector3.SmoothDamp(rigidBody.velocity, targetVelocity, ref velocity, movementSmoothing);       
-
-                if (Vector2.Distance(transform.position, playerPosition) < stoppingDistance)
-                {
-                    rigidBody.velocity = Vector3.zero;
-                    anim.SetBool("IsAttacking", true);
-                }
-
-                // If the enemy is moving left and the enemy is facing right...
-                if (move > 0 && facingLeft)
-                {
-                    // ... flip the enemy.
-                    Flip();
-                }
-                // Otherwise if the enemy is moving the right and the enemy is facing left...
-                else if (move < 0 && !facingLeft)
-                {
-                    // ... flip the enemy.
-                    Flip();
-                }
-            }
-        }
+        public Color InversedColor;     
 
         private void Awake()
         {
             rigidBody = GetComponent<Rigidbody2D>();
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            health = gameObject.GetComponent<HealthCalculator>();
+            anim = GetComponent<Animator>();
+            anim.SetBool("IsRunning", true);
 
             if (OnLandEvent == null)
                 OnLandEvent = new UnityEvent();
+        }
+
+        private void Update()
+        {
+            // Determine whether to show negative colors of creature
+
         }
 
         private void FixedUpdate()
@@ -79,23 +61,59 @@ namespace FunMath
                         OnLandEvent.Invoke();
                 }
             }
+
+            // If health is negative, show inversed colors
+            if(GetComponent<HealthCalculator>().IsNegativeHealth())
+            {
+                // Tint is inversed
+                GetComponent<SpriteRenderer>().color = InversedColor;
+            }
+            else
+            {
+                GetComponent<SpriteRenderer>().color = Color.white;
+            }
         }
 
-        private void Flip()
+        public void Move(float move, float stoppingDistance, Vector3 direction, Vector3 playerPosition)
         {
-            // Switch the way the enemy is labelled as facing.
-            facingLeft = !facingLeft;
+            //only control the enemy if grounded or airControl is turned on
+            if (grounded)
+            {
+                // Move the character by finding the target velocity
+                Vector3 targetVelocity = new Vector2(move * 5f, rigidBody.velocity.y) * direction;
+                // And then smoothing it out and applying it to the character
+                rigidBody.velocity = Vector3.SmoothDamp(rigidBody.velocity, targetVelocity, ref velocity, movementSmoothing);
 
-            // Multiply the enemy's x local scale by -1.
-            Vector3 theScale = transform.localScale;
-            theScale.x *= -1;
-            transform.localScale = theScale;
+                if (Vector2.Distance(transform.position, playerPosition) <= stoppingDistance)
+                {
+                    rigidBody.velocity = Vector3.zero;
+                    anim.SetBool("IsAttacking", true);
+                }
+
+                // If the enemy is moving left and the enemy is facing right...
+                if (rigidBody.velocity.x < 0)
+                {
+                    // ... flip the enemy.
+                    spriteRenderer.flipX = true;
+                }
+                // Otherwise if the enemy is moving the right and the enemy is facing left...
+                else if (rigidBody.velocity.x > 0)
+                {
+                    // ... flip the enemy.
+                    spriteRenderer.flipX = false;
+                }
+            }
         }
 
-        private void Die()
+        public void MoveAway(Vector2 distance)
         {
-            
-            Destroy(gameObject);
+            rigidBody.AddForce(distance * 2.0f, ForceMode2D.Impulse);
+        }
+        public void ReceiveAttack(OperationType operation, int modifier)
+        {
+            Debug.Log("Enemy has been hit");
+            health.ModifyHealth(OperationType.Subtraction, 5);
+            Debug.Log("You are dead");
         }
     }
 }
