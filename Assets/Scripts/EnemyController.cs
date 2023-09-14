@@ -38,12 +38,6 @@ namespace FunMath
                 OnLandEvent = new UnityEvent();
         }
 
-        private void Update()
-        {
-            // Determine whether to show negative colors of creature
-
-        }
-
         private void FixedUpdate()
         {
             bool wasGrounded = grounded;
@@ -89,6 +83,10 @@ namespace FunMath
                     rigidBody.velocity = Vector3.zero;
                     anim.SetBool("IsAttacking", true);
                 }
+                else
+                {
+                    anim.SetBool("IsAttacking", false);
+                }
 
                 // If the enemy is moving left and the enemy is facing right...
                 if (rigidBody.velocity.x < 0)
@@ -108,12 +106,6 @@ namespace FunMath
         public void MoveAway(Vector2 distance)
         {
             rigidBody.AddForce(distance * 2.0f, ForceMode2D.Impulse);
-        }
-        public void ReceiveAttack(OperationType operation, int modifier)
-        {
-            Debug.Log("Enemy has been hit");
-            health.ModifyHealth(OperationType.Subtraction, 5);
-            Debug.Log("You are dead");
         }
     }
 }

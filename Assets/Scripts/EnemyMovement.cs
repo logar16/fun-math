@@ -14,8 +14,6 @@ namespace FunMath
 
         private Vector3 direction;
 
-        private Arrow arrow;
-
         private void Start()
         {
             player = FindObjectOfType<PlayerController>().GetComponent<Transform>();
@@ -23,7 +21,6 @@ namespace FunMath
             {
                 Debug.Log("Player is not available");
             }
-            arrow = FindObjectOfType<Arrow>();
         }
         // Update is called once per frame       
         void Update()
@@ -59,17 +56,6 @@ namespace FunMath
 
                     // Apply a force to move away from the other enemy
                     controller.MoveAway(awayFromOtherEnemy);
-                }
-            }
-        }
-
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            if(collision != null)
-            {
-                if (arrow != null)
-                {
-                    controller.ReceiveAttack(arrow.Operator, arrow.Modifier);
                 }
             }
         }
