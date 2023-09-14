@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -19,53 +18,30 @@ namespace FunMath
         private Animator anim;
         private SpriteRenderer spriteRenderer;
         private HealthCalculator health;
+
         [Header("Events")]
         [Space]
 
         public UnityEvent OnLandEvent;
 
-        public Color InversedColor;
-
-        public void Move(float move, float stoppingDistance, Vector3 playerPosition)
-        {
-            //only control the enemy if grounded or airControl is turned on
-            if (grounded)
-            {
-                // Move the character by finding the target velocity
-                Vector3 targetVelocity = new Vector2(move * 5f, rigidBody.velocity.y);
-                // And then smoothing it out and applying it to the character
-                rigidBody.velocity = Vector3.SmoothDamp(rigidBody.velocity, targetVelocity, ref velocity, movementSmoothing);       
-
-                if (Vector2.Distance(transform.position, playerPosition) < stoppingDistance)
-                {
-                    rigidBody.velocity = Vector3.zero;
-                    anim.SetBool("IsAttacking", true);
-                }
-
-                // If the enemy is moving left and the enemy is facing right...
-                if (move > 0 && facingLeft)
-                {
-                    // ... flip the enemy.
-                    Flip();
-                }
-                // Otherwise if the enemy is moving the right and the enemy is facing left...
-                else if (move < 0 && !facingLeft)
-                {
-                    // ... flip the enemy.
-                    Flip();
-                }
-            }
-        }
+        public Color InversedColor;     
 
         private void Awake()
         {
-            anim = GetComponent<Animator>();
+            rigidBody = GetComponent<Rigidbody2D>();
             spriteRenderer = GetComponent<SpriteRenderer>();
             health = gameObject.GetComponent<HealthCalculator>();
+            anim = GetComponent<Animator>();
             anim.SetBool("IsRunning", true);
-            rigidBody = GetComponent<Rigidbody2D>();
+
             if (OnLandEvent == null)
                 OnLandEvent = new UnityEvent();
+        }
+
+        private void Update()
+        {
+            // Determine whether to show negative colors of creature
+
         }
 
         private void FixedUpdate()
@@ -97,7 +73,6 @@ namespace FunMath
                 GetComponent<SpriteRenderer>().color = Color.white;
             }
         }
-
 
         public void Move(float move, float stoppingDistance, Vector3 direction, Vector3 playerPosition)
         {
@@ -138,13 +113,7 @@ namespace FunMath
         {
             Debug.Log("Enemy has been hit");
             health.ModifyHealth(OperationType.Subtraction, 5);
-            Debug.Log("You are dead");                      
-        }
-
-        private void Update()
-        {
-            // Determine whether to show negative colors of creature
-
+            Debug.Log("You are dead");
         }
     }
 }
