@@ -165,18 +165,20 @@ namespace FunMath
         {
             if (CheckArrowData())
             {
+                SetArrowData();
                 Instantiate(arrowPrefab, firePoint.position, firePoint.rotation);
             }
         }
 
-        private bool CheckArrowData()
+        public bool CheckArrowData()
         {
             // Load current operator and modifier
             OperationItem operationItem = OperationSelector.QueryCurrentItem();
             ModifierItem modifierItem = ModifierSelector.QueryCurrentItem();
-            
+
             if (operationItem.Count == 0 || modifierItem.Count == 0)
             {
+                // TODO: Highlight the item in HUD if count is 0.
                 Debug.Log("Cannot attack because current operation count or modifier count is 0.");
                 Debug.Log($"operation item count: {operationItem.Count}");
                 Debug.Log($"modifier item count: {modifierItem.Count}");
@@ -184,12 +186,21 @@ namespace FunMath
                 return false;
             }
 
+            return true;
+        }
+
+        private void SetArrowData()
+        {
+            // Load current operator and modifier
+            OperationItem operationItem = OperationSelector.QueryCurrentItem();
+            ModifierItem modifierItem = ModifierSelector.QueryCurrentItem();
+
             OperationType operation = operationItem.Operator;
             int modifier = modifierItem.Modifier;
 
             // reduce item count
             OperationSelector.UseCurrentItem();
-            ModifierSelector.UseCurrentItem();            
+            ModifierSelector.UseCurrentItem();
 
             Arrow arrow = arrowPrefab.GetComponent<Arrow>();
             arrow.Operator = operation;
@@ -197,8 +208,6 @@ namespace FunMath
 
             Debug.Log($"operation: {operation}");
             Debug.Log($"modifier: {modifier}");
-
-            return true;
         }
     }
 }
