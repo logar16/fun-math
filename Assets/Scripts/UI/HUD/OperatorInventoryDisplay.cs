@@ -11,10 +11,14 @@ namespace FunMath
         [SerializeField]
         private ItemSlotDisplay prototypeSlotDisplay;
 
+        [SerializeField]
+        private ItemSlotDisplay.HighlighColor highlighColor = ItemSlotDisplay.HighlighColor.Green;
+
         // Start is called before the first frame update
         void Awake()
         {
-            selector = FindAnyObjectByType<PlayerController>().GetOperationSelector();
+            selector = FindAnyObjectByType<PlayerController>().OperationSelector;
+            selector.OnSelectionChange += OnSelectionChange;
             var inventory = selector.GetInventory();
             var items = inventory.GetItems();
             itemSlotDisplays = new List<ItemSlotDisplay>();
@@ -26,7 +30,7 @@ namespace FunMath
             }
 
             if (itemSlotDisplays.Count > 0)
-                itemSlotDisplays[0].Select(ItemSlotDisplay.HighlighColor.Green);
+                itemSlotDisplays[0].Select(highlighColor);
         }
 
         private void OnEnable()
@@ -57,7 +61,7 @@ namespace FunMath
             {
                 display.Deslect();
             }
-            itemSlotDisplays[index].Select(ItemSlotDisplay.HighlighColor.Green);
+            itemSlotDisplays[index].Select(highlighColor);
         }
     }
 }
