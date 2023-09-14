@@ -40,14 +40,14 @@ namespace FunMath
                 OnLandEvent = new UnityEvent();
 
             operationInventory.AddItem(new OperationItem(OperationType.Subtraction, 99));
-            //operationInventory.AddItem(new OperationItem(OperationType.Addition, 2));
-            //operationInventory.AddItem(new OperationItem(OperationType.Divide, 2));
-            //operationInventory.AddItem(new OperationItem(OperationType.Multiply, 2));
+            operationInventory.AddItem(new OperationItem(OperationType.Addition, 2));
+            operationInventory.AddItem(new OperationItem(OperationType.Divide, 2));
+            operationInventory.AddItem(new OperationItem(OperationType.Multiply, 2));
             modifierInventory.AddItem(new ModifierItem(1, 99));
-            //modifierInventory.AddItem(new ModifierItem(2, 3));
-            //modifierInventory.AddItem(new ModifierItem(3, 2));
-            //modifierInventory.AddItem(new ModifierItem(4, 1));
-            //modifierInventory.AddItem(new ModifierItem(5, 0));
+            modifierInventory.AddItem(new ModifierItem(2, 3));
+            modifierInventory.AddItem(new ModifierItem(3, 2));
+            modifierInventory.AddItem(new ModifierItem(4, 1));
+            modifierInventory.AddItem(new ModifierItem(5, 0));
         }
 
         void Update()
