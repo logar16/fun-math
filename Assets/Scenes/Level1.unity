@@ -1808,8 +1808,8 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!68 &905765702
-EdgeCollider2D:
+--- !u!19719996 &905765702
+TilemapCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1841,17 +1841,9 @@ EdgeCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: -17.90358, y: -2.5271463}
-  - {x: -3.7241406, y: -2.5271459}
-  - {x: 5.160695, y: -2.5304344}
-  - {x: 5.156161, y: -0.010088444}
-  - {x: 15.322953, y: 0.046613693}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0
+  m_UseDelaunayMesh: 0
 --- !u!1 &1009132529
 GameObject:
   m_ObjectHideFlags: 0
@@ -3337,8 +3329,9 @@ EdgeCollider2D:
   - {x: -2.3687959, y: 0.7151667}
   - {x: -1.7989385, y: 0.36170042}
   - {x: -0.9841566, y: 0.043382287}
+  - {x: -0.39007044, y: -0.17325842}
   - {x: 0.051000357, y: -0.35077977}
-  - {x: 0.41811657, y: -0.52809024}
+  - {x: 0.03841734, y: -0.3487879}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
@@ -3443,13 +3436,29 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1654776086527755035, guid: a84cec5f76c06bd47a3c289ae66a595e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6111759599676990618}
   m_SourcePrefab: {fileID: 100100000, guid: a84cec5f76c06bd47a3c289ae66a595e, type: 3}
 --- !u!4 &6111759599676990609 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7726754173726642116, guid: a84cec5f76c06bd47a3c289ae66a595e, type: 3}
   m_PrefabInstance: {fileID: 6111759599676990608}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6111759599676990618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2004995808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8ec68c3953788640ba1fb9d923063d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 10
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -12,10 +12,10 @@ namespace FunMath
         void Start()
         {
             var player = FindObjectOfType<PlayerController>();
-            ModifierSelector = player.GetModifierSelector();
+            ModifierSelector = player.ModifierSelector;
             ModifierSelector.OnSelectionChange += OnSelectionChanged;
             ModifierSelector.GetInventory().OnInventoryChanged += OnModInventoryChanged;
-            OperatorSelector = player.GetOperationSelector();
+            OperatorSelector = player.OperationSelector;
             OperatorSelector.OnSelectionChange += OnSelectionChanged;
             OperatorSelector.GetInventory().OnInventoryChanged += OnOpInventoryChanged;
         }

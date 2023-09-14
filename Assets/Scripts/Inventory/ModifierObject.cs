@@ -13,7 +13,7 @@ namespace FunMath
             var player = other.gameObject.GetComponent<PlayerController>();
             if (player)
             {
-                var selector = player.GetModifierSelector();
+                var selector = player.ModifierSelector;
                 if (selector != null)
                 {
                     selector.AddItem(new ModifierItem(Modifier));

@@ -6,11 +6,11 @@ namespace FunMath
 {
     public class PlayerController : MonoBehaviour
     {
-        private InventorySelector<OperationItem> operationInventory = new InventorySelector<OperationItem>();
-        private InventorySelector<ModifierItem> modifierInventory = new InventorySelector<ModifierItem>();
+        public Transform firePoint;
+        public GameObject arrowPrefab;
 
-        [SerializeField]
-        private Projectile projectilePrefab;
+        private InventorySelector<OperationItem> operationInventory = new InventorySelector<OperationItem>(4);
+        private InventorySelector<ModifierItem> modifierInventory = new InventorySelector<ModifierItem>(5);
 
         [Header("Movement")]
         [Space]
@@ -32,12 +32,72 @@ namespace FunMath
 
         public UnityEvent OnLandEvent;
 
+        public InventorySelector<OperationItem> OperationSelector
+        {
+            get { return operationInventory; }
+        }
+
+        public InventorySelector<ModifierItem> ModifierSelector
+        {
+            get { return modifierInventory; }
+        }
+
         private void Awake()
         {
             rigidBody = GetComponent<Rigidbody2D>();
 
             if (OnLandEvent == null)
                 OnLandEvent = new UnityEvent();
+
+            operationInventory.AddItem(new OperationItem(OperationType.Subtraction, 99));
+            operationInventory.AddItem(new OperationItem(OperationType.Addition, 2));
+            operationInventory.AddItem(new OperationItem(OperationType.Divide, 2));
+            operationInventory.AddItem(new OperationItem(OperationType.Multiply, 2));
+            modifierInventory.AddItem(new ModifierItem(1, 99));
+            modifierInventory.AddItem(new ModifierItem(2, 3));
+            modifierInventory.AddItem(new ModifierItem(3, 2));
+            modifierInventory.AddItem(new ModifierItem(4, 1));
+            modifierInventory.AddItem(new ModifierItem(5, 0));
+        }
+
+        void Update()
+        {
+            CheckInventorySelectionChange();
+        }
+
+        private void CheckInventorySelectionChange()
+        {
+            // Modifier Selection (use 1-5 keys)
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                modifierInventory.SelectIndex(0);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                modifierInventory.SelectIndex(1);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                modifierInventory.SelectIndex(2);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                modifierInventory.SelectIndex(3);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                modifierInventory.SelectIndex(4);
+            }
+
+            // Operation Selection (use Q and E keys)
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                operationInventory.SwitchItemLeft();
+            }
+            else if (Input.GetKeyDown(KeyCode.E))
+            {
+                operationInventory.SwitchItemRight();
+            }
         }
 
         private void FixedUpdate()
@@ -57,26 +117,6 @@ namespace FunMath
                         OnLandEvent.Invoke();
                 }
             }
-        }
-
-        public InventorySelector<OperationItem> GetOperationSelector()
-        {
-            return operationInventory;
-        }
-
-        public InventorySelector<ModifierItem> GetModifierSelector()
-        {
-            return modifierInventory;
-        }
-
-        public void Attack()
-        {
-            var operation = operationInventory.QueryCurrentItem().Operator;
-            var modifier = modifierInventory.QueryCurrentItem().Modifier;
-            var projectile = Instantiate(projectilePrefab, transform);
-            projectile.Operator = operation;
-            projectile.Modifier = modifier;
-            // TODO: Launch it!
         }
 
         public void Move(float move, bool jump)
@@ -119,6 +159,55 @@ namespace FunMath
 
             // rotate the player
             transform.Rotate(0f, 180f, 0f);
+        }
+
+        private void ShootArrow()
+        {
+            if (CheckArrowData())
+            {
+                SetArrowData();
+                Instantiate(arrowPrefab, firePoint.position, firePoint.rotation);
+            }
+        }
+
+        public bool CheckArrowData()
+        {
+            // Load current operator and modifier
+            OperationItem operationItem = OperationSelector.QueryCurrentItem();
+            ModifierItem modifierItem = ModifierSelector.QueryCurrentItem();
+
+            if (operationItem.Count == 0 || modifierItem.Count == 0)
+            {
+                // TODO: Highlight the item in HUD if count is 0.
+                Debug.Log("Cannot attack because current operation count or modifier count is 0.");
+                Debug.Log($"operation item count: {operationItem.Count}");
+                Debug.Log($"modifier item count: {modifierItem.Count}");
+
+                return false;
+            }
+
+            return true;
+        }
+
+        private void SetArrowData()
+        {
+            // Load current operator and modifier
+            OperationItem operationItem = OperationSelector.QueryCurrentItem();
+            ModifierItem modifierItem = ModifierSelector.QueryCurrentItem();
+
+            OperationType operation = operationItem.Operator;
+            int modifier = modifierItem.Modifier;
+
+            // reduce item count
+            OperationSelector.UseCurrentItem();
+            ModifierSelector.UseCurrentItem();
+
+            Arrow arrow = arrowPrefab.GetComponent<Arrow>();
+            arrow.Operator = operation;
+            arrow.Modifier = modifier;
+
+            Debug.Log($"operation: {operation}");
+            Debug.Log($"modifier: {modifier}");
         }
     }
 }

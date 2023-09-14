@@ -11,13 +11,15 @@ namespace FunMath
         [SerializeField]
         private ItemSlotDisplay prototypeSlotDisplay;
 
+        [SerializeField]
+        private ItemSlotDisplay.HighlighColor highlighColor = ItemSlotDisplay.HighlighColor.Green;
+
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
-            selector = FindAnyObjectByType<PlayerController>().GetOperationSelector();
+            selector = FindAnyObjectByType<PlayerController>().OperationSelector;
             selector.OnSelectionChange += OnSelectionChange;
             var inventory = selector.GetInventory();
-            inventory.OnInventoryChanged += OnInventoryChanged;
             var items = inventory.GetItems();
             itemSlotDisplays = new List<ItemSlotDisplay>();
             foreach (var item in items)
@@ -28,7 +30,21 @@ namespace FunMath
             }
 
             if (itemSlotDisplays.Count > 0)
-                itemSlotDisplays[0].Select();
+                itemSlotDisplays[0].Select(highlighColor);
+        }
+
+        private void OnEnable()
+        {
+            selector.OnSelectionChange += OnSelectionChange;
+            var inventory = selector.GetInventory();
+            inventory.OnInventoryChanged += OnInventoryChanged;
+        }
+
+        private void OnDisable()
+        {
+            selector.OnSelectionChange -= OnSelectionChange;
+            var inventory = selector.GetInventory();
+            inventory.OnInventoryChanged -= OnInventoryChanged;
         }
 
         private void OnInventoryChanged(List<OperationItem> Items)
@@ -45,7 +61,7 @@ namespace FunMath
             {
                 display.Deslect();
             }
-            itemSlotDisplays[index].Select();
+            itemSlotDisplays[index].Select(highlighColor);
         }
     }
 }

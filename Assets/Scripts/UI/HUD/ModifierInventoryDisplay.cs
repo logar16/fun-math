@@ -11,13 +11,15 @@ namespace FunMath
         [SerializeField]
         private ItemSlotDisplay prototypeSlotDisplay;
 
+        [SerializeField]
+        private ItemSlotDisplay.HighlighColor highlighColor = ItemSlotDisplay.HighlighColor.Yellow;
+
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
-            selector = FindAnyObjectByType<PlayerController>().GetModifierSelector();
+            selector = FindAnyObjectByType<PlayerController>().ModifierSelector;
             selector.OnSelectionChange += OnSelectionChange;
             var inventory = selector.GetInventory();
-            inventory.OnInventoryChanged += OnInventoryChanged;
             var items = inventory.GetItems();
             itemSlotDisplays = new List<ItemSlotDisplay>();
             foreach (var item in items)
@@ -28,7 +30,22 @@ namespace FunMath
             }
 
             if (itemSlotDisplays.Count > 0)
-                itemSlotDisplays[0].Select();
+                itemSlotDisplays[0].Select(highlighColor);
+        }
+
+        private void OnEnable()
+        {
+            selector = selector ?? FindAnyObjectByType<PlayerController>().ModifierSelector;
+            selector.OnSelectionChange += OnSelectionChange;
+            var inventory = selector.GetInventory();
+            inventory.OnInventoryChanged += OnInventoryChanged;
+        }
+
+        private void OnDisable()
+        {
+            selector.OnSelectionChange -= OnSelectionChange;
+            var inventory = selector.GetInventory();
+            inventory.OnInventoryChanged -= OnInventoryChanged;
         }
 
         private void OnInventoryChanged(List<ModifierItem> Items)
@@ -45,7 +62,7 @@ namespace FunMath
             {
                 display.Deslect();
             }
-            itemSlotDisplays[index].Select();
+            itemSlotDisplays[index].Select(highlighColor);
         }
     }
 }
