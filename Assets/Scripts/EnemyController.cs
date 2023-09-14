@@ -18,7 +18,7 @@ namespace FunMath
         private Vector3 velocity = Vector3.zero;
         private Animator anim;
         private SpriteRenderer spriteRenderer;
-        private Health health;
+        private HealthCalculator health;
         [Header("Events")]
         [Space]
 
@@ -28,7 +28,7 @@ namespace FunMath
         {
             anim = GetComponent<Animator>();
             spriteRenderer = GetComponent<SpriteRenderer>();
-            health = gameObject.GetComponent<Health>();
+            health = gameObject.GetComponent<HealthCalculator>();
             anim.SetBool("IsRunning", true);
             rigidBody = GetComponent<Rigidbody2D>();
             if (OnLandEvent == null)
@@ -109,12 +109,6 @@ namespace FunMath
             yield return new WaitForSeconds(delay);
 
             // Destroy the GameObject after the delay
-            Destroy(gameObject);
-        }
-
-        private void Die()
-        {
-            
             Destroy(gameObject);
         }
     }
