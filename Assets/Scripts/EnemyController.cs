@@ -10,6 +10,8 @@ namespace FunMath
         [SerializeField] private LayerMask whatIsGround;                          // A mask determining what is ground to the character
         [SerializeField] private Transform groundCheck;                           // A position marking where to check if the enemy is grounded.
 
+        public GameObject deathEffect;
+
         const float GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
         private bool grounded;            // Whether or not the enemy is grounded.
         private Rigidbody2D rigidBody;
@@ -107,6 +109,12 @@ namespace FunMath
             yield return new WaitForSeconds(delay);
 
             // Destroy the GameObject after the delay
+            Destroy(gameObject);
+        }
+
+        private void Die()
+        {
+            
             Destroy(gameObject);
         }
     }

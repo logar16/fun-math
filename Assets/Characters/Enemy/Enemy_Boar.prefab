@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 5317557692774926908}
   - component: {fileID: 7565965349669629981}
   m_Layer: 0
-  m_Name: EnemyCharacter
+  m_Name: Enemy_Boar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8ec68c3953788640ba1fb9d923063d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 5
+  health: 50
 --- !u!95 &-5037467864232331256
 Animator:
   serializedVersion: 5
@@ -216,6 +216,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 55
   groundCheck: {fileID: 4225741655437222247}
+  deathEffect: {fileID: 0}
   OnLandEvent:
     m_PersistentCalls:
       m_Calls: []
