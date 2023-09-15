@@ -8,7 +8,7 @@ namespace FunMath
     {
         private GameObject enemyPrefab; // Reference to the enemy prefab
         [SerializeField]
-        private int maxEnemies = 10; // Maximum number of enemies to spawn
+        public int maxEnemies = 5; // Maximum number of enemies to spawn
         private int numSpawnEnemies = 0;
         [SerializeField]
         private float spawnDelay = 5.0f; // Delay between enemy spawns (in seconds)
@@ -18,7 +18,6 @@ namespace FunMath
 
         private void Start()
         {
-            // Initialize the array to store spawn positions
             enemyPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
             if(enemyPrefab == null )
             {

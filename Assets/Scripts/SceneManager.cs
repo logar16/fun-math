@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -12,7 +11,8 @@ namespace FunMath
         public int GameSceneIndex = 0;
         public float Rate = 1f;
 
-        private Scene GameScene;
+        private Scene GameOverScene;
+
         public void ChangeToGame()
         {
             StartCoroutine(FadeToBlack());
@@ -27,7 +27,7 @@ namespace FunMath
                 yield return new WaitForEndOfFrame();
                 Fader.color = new Color(0, 0, 0, Fader.color.a + (Rate * Time.deltaTime));
             }
-            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(1);
         }
     }
 }
