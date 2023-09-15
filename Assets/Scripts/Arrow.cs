@@ -4,7 +4,7 @@ namespace FunMath
 {
     public class Arrow : MonoBehaviour
     {
-        public float speed = 20f;
+        public float speed = 30f;
         public Rigidbody2D arrowRigidBody;
 
         public OperationType Operator;
