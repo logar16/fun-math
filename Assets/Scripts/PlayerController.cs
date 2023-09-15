@@ -8,6 +8,7 @@ namespace FunMath
     {
         public Transform firePoint;
         public GameObject arrowPrefab;
+        public HealthBar HealthBar;
 
         private InventorySelector<OperationItem> operationInventory = new InventorySelector<OperationItem>(4);
         private InventorySelector<ModifierItem> modifierInventory = new InventorySelector<ModifierItem>(5);
@@ -62,9 +63,9 @@ namespace FunMath
         {
             rigidBody = GetComponent<Rigidbody2D>();
             audioSource = GetComponent<AudioSource>();
+            HealthBar = GetComponentInChildren<HealthBar>();
 
-            var health = GetComponent<HealthCalculator>();
-            health.OnHealthChanged += HandleHealthChanged;
+            GetComponent<HealthCalculator>().OnHealthChanged += HandleHealthChanged;
 
             if (OnLandEvent == null)
                 OnLandEvent = new UnityEvent();
@@ -86,6 +87,7 @@ namespace FunMath
             if (onHealthChangeData.ResultantHealth <= 0)
             {
                 audioSource.PlayOneShot(deathClip);
+                //TODO: Trigger end of game
             }
         }
 

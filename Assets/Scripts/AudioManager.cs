@@ -17,7 +17,7 @@ namespace FunMath
         public void PlaySound(AudioClip clip)
         {
             // Play the clip
-            audioSource.PlayOneShot(clip);
+            audioSource.PlayOneShot(clip, 0.3f);
         }
     }
 }
