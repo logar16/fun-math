@@ -14,18 +14,18 @@ namespace FunMath
         private Vector2 spawnPosition = Vector2.zero;
         private float offset = 5.0f;
         private float closeRange = 10.0f;
-        private string prefabPath = "Assets/Characters/Enemy/Enemy_Boar.prefab";
+        //private string prefabPath = "Assets/Characters/Enemy/Enemy_Boar.prefab";
 
 
         private void Start()
         {
             // Initialize the array to store spawn positions
             player = FindObjectOfType<PlayerController>().GetComponent<Transform>();
-            enemyPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
-            if(enemyPrefab == null )
-            {
-                Debug.Log("enemy is unavailable");
-            }
+            //enemyPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+            //if(enemyPrefab == null )
+            //{
+            //    Debug.Log("enemy is unavailable");
+            //}
             spawnDelay = 3.0f;
             spawnPosition = transform.position;
 
