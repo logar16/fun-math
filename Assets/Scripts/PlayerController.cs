@@ -266,7 +266,7 @@ namespace FunMath
         private void OnCollisionStay2D(Collision2D collision)
         {
             if (collision.gameObject.CompareTag("Enemy") && !isInvincible)
-            {              
+            {
                 TakeRandomDamage();
             }
         }
