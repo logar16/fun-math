@@ -70,7 +70,7 @@ namespace FunMath
             {
                 spriteRenderer.color = Color.white;
             }
-            string textStr = "<color=\"orange\">" + healthCalculator.Health.ToString();
+            string textStr = "<color=\"orange\">" + healthCalculator.Health.ToString() + "</color>";
             text.text = textStr;
             text.transform.rotation = Quaternion.identity;
         }

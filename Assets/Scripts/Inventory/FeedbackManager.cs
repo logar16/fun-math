@@ -79,7 +79,7 @@ namespace FunMath
             if(data.ResultantHealth == 0)
             {
                 targetColor = new Color(8, 73, 0); // Dark Green Color
-                targetColorStr = "#0000FF";
+                targetColorStr = "red";
             }
 
             // TargetColorStr is either dark green (dead) or orange (alive)
@@ -92,8 +92,8 @@ namespace FunMath
 
                 // Determine string to show
                 string displayString = "";
-                displayString += "<color=\"green\">" + AddSize(StringHelper.GetOperatorString(data.Operation)) + "</color> <color=\"yellow\">" + data.Modifier.ToString() + 
-                                "</color> = [<color=\"" + targetColorStr + "\">" + data.ResultantHealth.ToString() + "</color>]";
+                displayString += $"<color=\"green\">{AddSize(StringHelper.GetOperatorString(data.Operation))}</color> <color=\"yellow\">{data.Modifier}</color>" +
+                                 $" = [<color=\"{targetColorStr}\">{data.ResultantHealth}</color>]";
                 // Show string
                 TmP.text = displayString;
                 // Start a coroutine that goes from target color to fade out
