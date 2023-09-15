@@ -175,3 +175,5 @@ MonoBehaviour:
   arrowRigidBody: {fileID: 5316564557807724921}
   Operator: 0
   Modifier: 1
+  launchSound: {fileID: 8300000, guid: d19fbf2ffc3058c47b2470da79cc5431, type: 3}
+  hitSound: {fileID: 8300000, guid: a31b9427fc5ca8745b314a8965876e4e, type: 3}
