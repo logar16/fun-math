@@ -4,6 +4,32 @@ using UnityEngine;
 using DG.Tweening;
 namespace FunMath
 {
+    public static class StringHelper
+    {
+        public static string GetOperatorString(OperationType operationType)
+        {
+            string str = "";
+            switch (operationType)
+            {
+                case OperationType.Addition:
+                    str += "+";
+                    break;
+                case OperationType.Subtraction:
+                    str += "-";
+                    break;
+                case OperationType.Multiply:
+                    str += "x";
+                    break;
+                case OperationType.Divide:
+                    str += "÷";
+                    break;
+                default:
+                    str += $"UNIMPLEMENTED {operationType.ToString()}";
+                    break;
+            }
+            return str;
+        }
+    }
     public class FeedbackManager : MonoBehaviour
     {
         public Canvas worldCanvas;
@@ -66,7 +92,7 @@ namespace FunMath
 
                 // Determine string to show
                 string displayString = "";
-                displayString += "<color=\"green\">" + GetOperatorString(data.Operation) + "</color> <color=\"yellow\">" + data.Modifier.ToString() + 
+                displayString += "<color=\"green\">" + AddSize(StringHelper.GetOperatorString(data.Operation)) + "</color> <color=\"yellow\">" + data.Modifier.ToString() + 
                                 "</color> = [<color=\"" + targetColorStr + "\">" + data.ResultantHealth.ToString() + "</color>]";
                 // Show string
                 TmP.text = displayString;
@@ -92,30 +118,12 @@ namespace FunMath
         }
         // PERCENT
         public int operationStrSize = 150;
-        public string GetOperatorString(OperationType operationType)
+        public string AddSize(string str)
         {
-            string str = "<size=" + operationStrSize.ToString() + "%>";
-            switch(operationType)
-            {
-                case OperationType.Addition:
-                    str += "+";
-                    break;
-                case OperationType.Subtraction:
-                    str += "-";
-                    break;
-                case OperationType.Multiply:
-                    str += "x";
-                    break;
-                case OperationType.Divide:
-                    str += "÷";
-                    break;
-                default:
-                    str += $"UNIMPLEMENTED {operationType.ToString()}";
-                    break;
-            }
-            str += "</size>";
-            return str;
+            return "<size=" + operationStrSize.ToString() + "%>" + str + "</size>";
         }
+
+
 
 
         IEnumerator ChangeColorOverTime(SpriteRenderer renderer, Color initialColor, Color targetColor)

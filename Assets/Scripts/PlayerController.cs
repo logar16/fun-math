@@ -245,8 +245,8 @@ namespace FunMath
             ModifierSelector.UseCurrentItem();
 
             Arrow arrow = arrowPrefab.GetComponent<Arrow>();
-            arrow.Operator = operation;
-            arrow.Modifier = modifier;
+            arrow.SetArrowData(operation, modifier);
+
 
             Debug.Log($"operation: {operation}");
             Debug.Log($"modifier: {modifier}");
