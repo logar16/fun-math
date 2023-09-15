@@ -7,38 +7,27 @@ namespace FunMath
     public class EnemySpawner : MonoBehaviour
     {
         private GameObject enemyPrefab; // Reference to the enemy prefab
-        public int maxEnemies = 10; // Maximum number of enemies to spawn
+        [SerializeField]
+        private int maxEnemies = 10; // Maximum number of enemies to spawn
         private int numSpawnEnemies = 0;
-        private Transform player;
-        private float spawnDelay = 0.0f; // Delay between enemy spawns (in seconds)
+        [SerializeField]
+        private float spawnDelay = 5.0f; // Delay between enemy spawns (in seconds)
         private Vector2 spawnPosition = Vector2.zero;
-        private float offset = 5.0f;
-        private float closeRange = 10.0f;
         private string prefabPath = "Assets/Characters/Enemy/Enemy_Boar.prefab";
 
 
         private void Start()
         {
             // Initialize the array to store spawn positions
-            player = FindObjectOfType<PlayerController>().GetComponent<Transform>();
             enemyPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
             if(enemyPrefab == null )
             {
                 Debug.Log("enemy is unavailable");
             }
-            spawnDelay = 3.0f;
             spawnPosition = transform.position;
 
             // Start spawning enemies with a delay
             StartCoroutine(SpawnEnemyWithDelay());
-        }
-
-        private void Update()
-        {    
-            if (Vector2.Distance(player.transform.position, transform.position) <= closeRange)
-            {
-                spawnPosition = new Vector2(transform.position.x - offset, transform.position.y);
-            }
         }
 
         private void SpawnEnemy()

@@ -22,7 +22,7 @@ namespace FunMath
         [SerializeField] private LayerMask whatIsGround;                          // A mask determining what is ground to the character
         [SerializeField] private Transform groundCheck;                           // A position marking where to check if the player is grounded.
 
-        const float GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
+        const float GroundedRadius = 1f; // Radius of the overlap circle to determine if grounded
         private bool grounded;            // Whether or not the player is grounded.
         private Rigidbody2D rigidBody;
         private bool facingRight = true;  // For determining which way the player is currently facing.
@@ -68,30 +68,19 @@ namespace FunMath
             HealthBar = GetComponentInChildren<HealthBar>();
 
             healthCalculator = GetComponent<HealthCalculator>();
-            healthCalculator.OnHealthChanged += HandleHealthChanged;
 
             if (OnLandEvent == null)
                 OnLandEvent = new UnityEvent();
 
             operationInventory.AddItem(new OperationItem(OperationType.Subtraction, 99));
-            operationInventory.AddItem(new OperationItem(OperationType.Addition, 2));
-            operationInventory.AddItem(new OperationItem(OperationType.Divide, 2));
-            operationInventory.AddItem(new OperationItem(OperationType.Multiply, 2));
+            operationInventory.AddItem(new OperationItem(OperationType.Addition, 10));
+            operationInventory.AddItem(new OperationItem(OperationType.Divide, 10));
+            operationInventory.AddItem(new OperationItem(OperationType.Multiply, 10));
             modifierInventory.AddItem(new ModifierItem(1, 99));
             modifierInventory.AddItem(new ModifierItem(2, 20));
             modifierInventory.AddItem(new ModifierItem(3, 15));
             modifierInventory.AddItem(new ModifierItem(4, 10));
             modifierInventory.AddItem(new ModifierItem(5, 5));
-        }
-
-        private void HandleHealthChanged(OnHealthChangeData onHealthChangeData)
-        {
-            audioSource.PlayOneShot(hurtClip);
-            if (onHealthChangeData.ResultantHealth <= 0)
-            {
-                audioSource.PlayOneShot(deathClip);
-                //TODO: Trigger end of game
-            }
         }
 
         void Update()
@@ -273,9 +262,18 @@ namespace FunMath
 
         private void TakeRandomDamage()
         {
-            audioSource.PlayOneShot(hurtClip);
+            if (healthCalculator.Health <= 0)
+            {
+                return;
+            }
+            audioSource.PlayOneShot(hurtClip, 0.5f);
             int damageAmount = UnityEngine.Random.Range(1, 10);
             healthCalculator.ModifyHealth(OperationType.Subtraction, damageAmount);
+            if (healthCalculator.Health <= 0)
+            {
+                audioSource.PlayOneShot(deathClip, 0.4f);
+                //TODO: Trigger end of game
+            }
 
             isInvincible = true;
             Invoke("ResetInvincibility", 2);

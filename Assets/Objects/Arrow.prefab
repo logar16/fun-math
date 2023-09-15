@@ -412,5 +412,6 @@ MonoBehaviour:
   arrowRigidBody: {fileID: 5316564557807724921}
   Operator: 0
   Modifier: 1
-  launchSound: {fileID: 8300000, guid: d19fbf2ffc3058c47b2470da79cc5431, type: 3}
-  hitSound: {fileID: 8300000, guid: a31b9427fc5ca8745b314a8965876e4e, type: 3}  text: {fileID: 8473189263819564127}
+  launchSound: {fileID: 8300000, guid: 3a70f8ae1933f0748a4828a39b913dfb, type: 3}
+  hitSound: {fileID: 8300000, guid: fd25a15f9797641458336cccfb445343, type: 3}
+  text: {fileID: 8473189263819564127}
