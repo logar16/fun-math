@@ -15,7 +15,7 @@ namespace FunMath
         private Vector2 spawnPosition = Vector2.zero;
         private float offset = 5.0f;
         private float closeRange = 10.0f;
-        private string prefabPath = "Assets/Characters/Enemy/EnemyCharacter.prefab";
+        private string prefabPath = "Assets/Characters/Enemy/Enemy_Boar.prefab";
 
 
         private void Start()
