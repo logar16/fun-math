@@ -117,6 +117,8 @@ namespace FunMath
 
         private void Die()
         {
+            ScoreTracker scoreTracker = GetComponent<ScoreTracker>();
+            scoreTracker.AddScore(5);
             Destroy(gameObject);
         }
     }
