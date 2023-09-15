@@ -28,6 +28,7 @@ namespace FunMath
         private bool facingRight = true;  // For determining which way the player is currently facing.
         private Vector3 velocity = Vector3.zero;
         private HealthCalculator healthCalculator;
+        private bool isInvincible = false;
 
         [Header("Audio")]
         [Space]
@@ -256,17 +257,33 @@ namespace FunMath
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (collision.gameObject.CompareTag("Enemy"))
-            {                
-                int damageAmount = UnityEngine.Random.Range(1, 10);
-                TakeDamage(damageAmount);
+            if (collision.gameObject.CompareTag("Enemy") && !isInvincible)
+            {
+                TakeRandomDamage();
             }
         }
 
-        private void TakeDamage(int damageAmount)
+        private void OnCollisionStay2D(Collision2D collision)
+        {
+            if (collision.gameObject.CompareTag("Enemy") && !isInvincible)
+            {              
+                TakeRandomDamage();
+            }
+        }
+
+        private void TakeRandomDamage()
         {
             audioSource.PlayOneShot(hurtClip);
+            int damageAmount = UnityEngine.Random.Range(1, 10);
             healthCalculator.ModifyHealth(OperationType.Subtraction, damageAmount);
+
+            isInvincible = true;
+            Invoke("ResetInvincibility", 2);
+        }
+
+        private void ResetInvincibility()
+        {
+            isInvincible = false;
         }
     }
 }

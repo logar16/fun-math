@@ -12,5 +12,10 @@ namespace FunMath
             slider.value = (float) currentValue / maxValue;
             Debug.Log($"Current value: {currentValue}, Max value: {maxValue}. percentage: {slider.value}");
         }
+
+        private void LateUpdate()
+        {
+            transform.rotation = Quaternion.identity;
+        }
     }
 }
