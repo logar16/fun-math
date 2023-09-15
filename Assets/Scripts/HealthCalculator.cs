@@ -19,10 +19,8 @@ namespace FunMath
         public delegate void HealthChanged(OnHealthChangeData onHealthChangeData);
         public event HealthChanged OnHealthChanged;
 
-
-        [SerializeField]
-        [Range(-50, 50)]
-        int health = 10;
+        [SerializeField][Range(-50, 50)] private int health = 50;
+        private readonly int maxHealth = 50;
 
         public bool IsNegativeHealth()
         {
@@ -48,20 +46,9 @@ namespace FunMath
                     break;
             }
 
-            Debug.Log($"{gameObject} health :{health}");
-            if (health == 0)
-            {
-                // Start the coroutine to handle the delay before destroying the GameObject
-                StartCoroutine(DestroyAfterDelay(2.0f));
+            health = Mathf.Clamp(health, -maxHealth, maxHealth);
 
-                // Note: This script doesn't distinguish between player and enemy contexts. Please ensure both player/enemy
-                // prefabs have an attached animator and include the praramter 'IsDead' to transition into the dying animation.
-                Animator animator = gameObject.GetComponent<Animator>();
-                animator.SetBool("IsDead", true);
-
-                // TODO: move destroy as an animation trigger
-                // Destroy(gameObject);
-            }
+            CheckHealth();
 
             OnHealthChangeData data = new OnHealthChangeData();
             data.Operation = operation;
@@ -72,11 +59,35 @@ namespace FunMath
             OnHealthChanged?.Invoke(data);
         }
 
-        private IEnumerator DestroyAfterDelay(float delay)
+        private void CheckHealth()
         {
-            yield return new WaitForSeconds(delay);
-            // Destroy the GameObject after the delay
-            Destroy(gameObject);
+            Debug.Log($"{gameObject.name} health: {health}");
+
+            bool isPlayer = gameObject.name == "Player";
+            bool isPlayerDead = isPlayer && health <= 0;
+            bool isEnemyDead = !isPlayer && health == 0;
+
+            if (isPlayer)
+            {
+                PlayerController player = gameObject.GetComponent<PlayerController>();
+                player.HealthBar.UpdateHealthBar(health, maxHealth);
+            }
+
+            if (isPlayerDead || isEnemyDead)
+            {
+                CharacterDie();
+            }
+        }
+
+        private void CharacterDie()
+        {
+            // Note: This script doesn't distinguish between player and enemy contexts. Please ensure both player/enemy
+            // prefabs have an attached animator and include the praramter 'IsDead' to transition into the dying animation.
+            Animator animator = gameObject.GetComponent<Animator>();
+            animator.SetBool("IsDead", true);
+
+            // TODO: move destroy as an animation trigger
+            // Destroy(gameObject);
         }
     }
 }

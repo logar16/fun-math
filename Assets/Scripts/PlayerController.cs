@@ -8,6 +8,7 @@ namespace FunMath
     {
         public Transform firePoint;
         public GameObject arrowPrefab;
+        public HealthBar HealthBar;
 
         private InventorySelector<OperationItem> operationInventory = new InventorySelector<OperationItem>(4);
         private InventorySelector<ModifierItem> modifierInventory = new InventorySelector<ModifierItem>(5);
@@ -27,10 +28,26 @@ namespace FunMath
         private bool facingRight = true;  // For determining which way the player is currently facing.
         private Vector3 velocity = Vector3.zero;
 
+        [Header("Audio")]
+        [Space]
+        [SerializeField]
+        private AudioClip jumpClip;
+        [SerializeField]
+        private AudioClip landClip;
+        [SerializeField]
+        private AudioClip walkClip;
+        [SerializeField]
+        private AudioClip deathClip;
+        [SerializeField]
+        private AudioClip hurtClip;
+        
+        private AudioSource audioSource;
+
         [Header("Events")]
         [Space]
 
         public UnityEvent OnLandEvent;
+
 
         public InventorySelector<OperationItem> OperationSelector
         {
@@ -45,6 +62,10 @@ namespace FunMath
         private void Awake()
         {
             rigidBody = GetComponent<Rigidbody2D>();
+            audioSource = GetComponent<AudioSource>();
+            HealthBar = GetComponentInChildren<HealthBar>();
+
+            GetComponent<HealthCalculator>().OnHealthChanged += HandleHealthChanged;
 
             if (OnLandEvent == null)
                 OnLandEvent = new UnityEvent();
@@ -54,10 +75,20 @@ namespace FunMath
             operationInventory.AddItem(new OperationItem(OperationType.Divide, 2));
             operationInventory.AddItem(new OperationItem(OperationType.Multiply, 2));
             modifierInventory.AddItem(new ModifierItem(1, 99));
-            modifierInventory.AddItem(new ModifierItem(2, 3));
-            modifierInventory.AddItem(new ModifierItem(3, 2));
-            modifierInventory.AddItem(new ModifierItem(4, 1));
-            modifierInventory.AddItem(new ModifierItem(5, 0));
+            modifierInventory.AddItem(new ModifierItem(2, 20));
+            modifierInventory.AddItem(new ModifierItem(3, 15));
+            modifierInventory.AddItem(new ModifierItem(4, 10));
+            modifierInventory.AddItem(new ModifierItem(5, 5));
+        }
+
+        private void HandleHealthChanged(OnHealthChangeData onHealthChangeData)
+        {
+            audioSource.PlayOneShot(hurtClip);
+            if (onHealthChangeData.ResultantHealth <= 0)
+            {
+                audioSource.PlayOneShot(deathClip);
+                //TODO: Trigger end of game
+            }
         }
 
         void Update()
@@ -114,13 +145,20 @@ namespace FunMath
                 {
                     grounded = true;
                     if (!wasGrounded)
+                    {
+                        audioSource.PlayOneShot(landClip);
                         OnLandEvent.Invoke();
+                    }
                 }
             }
         }
 
         public void Move(float move, bool jump)
         {
+            if (grounded && move != 0 && audioSource.isPlaying == false)
+            {
+                audioSource.PlayOneShot(walkClip);
+            }
             //only control the player if grounded or airControl is turned on
             if (grounded || airControl)
             {
@@ -145,6 +183,7 @@ namespace FunMath
             // If the player should jump...
             if (grounded && jump)
             {
+                audioSource.PlayOneShot(jumpClip);
                 // Add a vertical force to the player.
                 grounded = false;
                 rigidBody.AddForce(new Vector2(0f, jumpForce));
