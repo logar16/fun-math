@@ -29,6 +29,7 @@ namespace FunMath
         private void Awake()
         {
             rigidBody = GetComponent<Rigidbody2D>();
+            rigidBody.angularDrag = 5.50f;
             spriteRenderer = GetComponent<SpriteRenderer>();
             health = gameObject.GetComponent<HealthCalculator>();
             anim = GetComponent<Animator>();
@@ -88,6 +89,10 @@ namespace FunMath
                 {
                     rigidBody.velocity = Vector3.zero;
                     anim.SetBool("IsAttacking", true);
+                }
+                else
+                {
+                    anim.SetBool("IsAttacking", false);
                 }
 
                 // If the enemy is moving left and the enemy is facing right...
