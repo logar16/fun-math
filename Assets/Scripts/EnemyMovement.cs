@@ -10,7 +10,7 @@ namespace FunMath
 
         private float moveSpeed = 25f;
 
-        private float stoppingDistance = 2f;
+        private float stoppingDistance = 0.5f;
 
         private Vector3 direction;
 
