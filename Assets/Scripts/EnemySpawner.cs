@@ -48,7 +48,6 @@ namespace FunMath
             if (enemyPrefab != null)
             {
                 // Randomly select a spawn point
-                Debug.Log("spawn position " + spawnPosition);
                 Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
                 numSpawnEnemies += 1;               
             }
