@@ -24,7 +24,8 @@ namespace FunMath
 
         public UnityEvent OnLandEvent;
 
-        public Color InversedColor;     
+        public Color InversedColor;
+        public TMPro.TextMeshProUGUI text;
 
         private void Awake()
         {
@@ -37,12 +38,6 @@ namespace FunMath
 
             if (OnLandEvent == null)
                 OnLandEvent = new UnityEvent();
-        }
-
-        private void Update()
-        {
-            // Determine whether to show negative colors of creature
-
         }
 
         private void FixedUpdate()
@@ -64,15 +59,18 @@ namespace FunMath
             }
 
             // If health is negative, show inversed colors
-            if(GetComponent<HealthCalculator>().IsNegativeHealth())
+            if(health.IsNegativeHealth())
             {
                 // Tint is inversed
-                GetComponent<SpriteRenderer>().color = InversedColor;
+                spriteRenderer.color = InversedColor;
             }
             else
             {
-                GetComponent<SpriteRenderer>().color = Color.white;
+                spriteRenderer.color = Color.white;
             }
+            string textStr = "<color=\"orange\">" + health.GetHealth().ToString();
+            text.text = textStr;
+            text.transform.rotation = Quaternion.identity;
         }
 
         public void Move(float move, float stoppingDistance, Vector3 direction, Vector3 playerPosition)
@@ -113,12 +111,6 @@ namespace FunMath
         public void MoveAway(Vector2 distance)
         {
             rigidBody.AddForce(distance * 2.0f, ForceMode2D.Impulse);
-        }
-        public void ReceiveAttack(OperationType operation, int modifier)
-        {
-            Debug.Log("Enemy has been hit");
-            health.ModifyHealth(OperationType.Subtraction, 5);
-            Debug.Log("You are dead");
         }
     }
 }

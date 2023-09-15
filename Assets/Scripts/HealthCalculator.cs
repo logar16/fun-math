@@ -22,6 +22,11 @@ namespace FunMath
         [SerializeField][Range(-50, 50)] private int health = 50;
         private readonly int maxHealth = 50;
 
+        public int GetHealth()
+        {
+            return health;
+        }
+
         public bool IsNegativeHealth()
         {
             return health < 0;
