@@ -29,10 +29,5 @@ namespace FunMath
             }
             UnityEngine.SceneManagement.SceneManager.LoadScene(1);
         }
-
-        //IEnumerator GameOverSequence()
-        //{
-
-        //}
     }
 }
