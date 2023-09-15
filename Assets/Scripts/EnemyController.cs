@@ -30,6 +30,7 @@ namespace FunMath
         private void Awake()
         {
             rigidBody = GetComponent<Rigidbody2D>();
+            rigidBody.angularDrag = 5.50f;
             spriteRenderer = GetComponent<SpriteRenderer>();
             health = gameObject.GetComponent<HealthCalculator>();
             anim = GetComponent<Animator>();
