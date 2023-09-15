@@ -22,7 +22,8 @@ namespace FunMath
             // Fly forward
             arrowRigidBody.velocity = transform.right * speed;
         
-            FindObjectOfType<AudioManager>().PlaySound(launchSound);        }
+            FindObjectOfType<AudioManager>().PlaySound(launchSound);
+        }
 
         public void SetArrowData(OperationType oper, int Modifier)
         {

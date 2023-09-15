@@ -27,6 +27,7 @@ namespace FunMath
         private Rigidbody2D rigidBody;
         private bool facingRight = true;  // For determining which way the player is currently facing.
         private Vector3 velocity = Vector3.zero;
+        private HealthCalculator healthCalculator;
 
         [Header("Audio")]
         [Space]
@@ -65,7 +66,8 @@ namespace FunMath
             audioSource = GetComponent<AudioSource>();
             HealthBar = GetComponentInChildren<HealthBar>();
 
-            GetComponent<HealthCalculator>().OnHealthChanged += HandleHealthChanged;
+            healthCalculator = GetComponent<HealthCalculator>();
+            healthCalculator.OnHealthChanged += HandleHealthChanged;
 
             if (OnLandEvent == null)
                 OnLandEvent = new UnityEvent();
@@ -250,6 +252,21 @@ namespace FunMath
 
             Debug.Log($"operation: {operation}");
             Debug.Log($"modifier: {modifier}");
+        }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.gameObject.CompareTag("Enemy"))
+            {                
+                int damageAmount = UnityEngine.Random.Range(1, 10);
+                TakeDamage(damageAmount);
+            }
+        }
+
+        private void TakeDamage(int damageAmount)
+        {
+            audioSource.PlayOneShot(hurtClip);
+            healthCalculator.ModifyHealth(OperationType.Subtraction, damageAmount);
         }
     }
 }

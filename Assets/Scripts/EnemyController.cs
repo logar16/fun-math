@@ -17,7 +17,7 @@ namespace FunMath
         private Vector3 velocity = Vector3.zero;
         private Animator anim;
         private SpriteRenderer spriteRenderer;
-        private HealthCalculator health;
+        private HealthCalculator healthCalculator;
 
         [Header("Events")]
         [Space]
@@ -29,10 +29,12 @@ namespace FunMath
 
         private void Awake()
         {
+
             rigidBody = GetComponent<Rigidbody2D>();
             rigidBody.angularDrag = 5.50f;
             spriteRenderer = GetComponent<SpriteRenderer>();
-            health = gameObject.GetComponent<HealthCalculator>();
+            healthCalculator = gameObject.GetComponent<HealthCalculator>();
+            healthCalculator.Health = Random.Range(1, 50);
             anim = GetComponent<Animator>();
             anim.SetBool("IsRunning", true);
 
@@ -59,7 +61,7 @@ namespace FunMath
             }
 
             // If health is negative, show inversed colors
-            if(health.IsNegativeHealth())
+            if(healthCalculator.IsNegativeHealth())
             {
                 // Tint is inversed
                 spriteRenderer.color = InversedColor;
@@ -68,7 +70,7 @@ namespace FunMath
             {
                 spriteRenderer.color = Color.white;
             }
-            string textStr = "<color=\"orange\">" + health.GetHealth().ToString();
+            string textStr = "<color=\"orange\">" + healthCalculator.Health.ToString();
             text.text = textStr;
             text.transform.rotation = Quaternion.identity;
         }
@@ -111,6 +113,11 @@ namespace FunMath
         public void MoveAway(Vector2 distance)
         {
             rigidBody.AddForce(distance * 2.0f, ForceMode2D.Impulse);
+        }
+
+        private void Die()
+        {
+            Destroy(gameObject);
         }
     }
 }
