@@ -132,7 +132,11 @@ namespace FunMath
             while(time < FlashTiming)
             {
                 time += Time.deltaTime;
-                renderer.color = Color.Lerp(initialColor, targetColor, time / FlashTiming);
+                if (renderer != null)
+                {
+                    renderer.color = Color.Lerp(initialColor, targetColor, time / FlashTiming);
+                }
+                
                 yield return null;
             }
         }

@@ -22,9 +22,10 @@ namespace FunMath
         [SerializeField][Range(-50, 50)] private int health = 50;
         private readonly int maxHealth = 50;
 
-        public int GetHealth()
+        public int Health
         {
-            return health;
+            get { return health; }
+            set { health = value; }
         }
 
         public bool IsNegativeHealth()
@@ -90,9 +91,6 @@ namespace FunMath
             // prefabs have an attached animator and include the praramter 'IsDead' to transition into the dying animation.
             Animator animator = gameObject.GetComponent<Animator>();
             animator.SetBool("IsDead", true);
-
-            // TODO: move destroy as an animation trigger
-            // Destroy(gameObject);
         }
     }
 }

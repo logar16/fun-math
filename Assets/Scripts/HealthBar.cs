@@ -9,7 +9,8 @@ namespace FunMath
 
         public void UpdateHealthBar(int currentValue, int maxValue)
         {
-            slider.value = currentValue / maxValue;
+            slider.value = (float) currentValue / maxValue;
+            Debug.Log($"Current value: {currentValue}, Max value: {maxValue}. percentage: {slider.value}");
         }
     }
 }
