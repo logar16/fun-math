@@ -283,6 +283,7 @@ GameObject:
   - component: {fileID: 2423863189419242571}
   - component: {fileID: 5317557692774926908}
   - component: {fileID: 7565965349669629981}
+  - component: {fileID: 7808354405142963625}
   m_Layer: 0
   m_Name: Enemy_Boar
   m_TagString: Enemy
@@ -501,3 +502,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.502011, y: 0.9589822}
   m_EdgeRadius: 0
+--- !u!114 &7808354405142963625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8211046483456416584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7cebbf5da3f1b748b37224f4236ddff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ScoreUI: {fileID: 0}
