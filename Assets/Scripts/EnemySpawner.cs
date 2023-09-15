@@ -13,12 +13,12 @@ namespace FunMath
         [SerializeField]
         private float spawnDelay = 5.0f; // Delay between enemy spawns (in seconds)
         private Vector2 spawnPosition = Vector2.zero;
-        private string prefabPath = "Assets/Characters/Enemy/Enemy_Boar.prefab";
+        private string prefabPath = "Characters/Enemy/Enemy_Boar";
 
 
         private void Start()
         {
-            enemyPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+            enemyPrefab = Resources.Load<GameObject>(prefabPath);
             if(enemyPrefab == null )
             {
                 Debug.Log("enemy is unavailable");
