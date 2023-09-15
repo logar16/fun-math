@@ -18,7 +18,10 @@ namespace FunMath
         public void AddScore(int score)
         {
             Score += score;
-            ScoreUI.text = Score.ToString();
+            if (ScoreUI != null)
+            {
+                ScoreUI.text = Score.ToString();
+            }
         }
     }
 }

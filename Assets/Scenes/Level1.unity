@@ -152,7 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eec207ee2535e68488de8e916d633da4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxEnemies: 1
+  maxEnemies: 5
+  spawnDelay: 7
 --- !u!4 &8947223
 Transform:
   m_ObjectHideFlags: 0
@@ -162,7 +163,7 @@ Transform:
   m_GameObject: {fileID: 8947221}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.85, y: 0.55, z: 0.12095843}
+  m_LocalPosition: {x: 8.85, y: 0.96, z: 0.12095843}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3901,7 +3902,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eec207ee2535e68488de8e916d633da4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxEnemies: 1
+  maxEnemies: 5
+  spawnDelay: 7
 --- !u!4 &2127918517
 Transform:
   m_ObjectHideFlags: 0
@@ -3911,7 +3913,7 @@ Transform:
   m_GameObject: {fileID: 2127918515}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.67, y: -1.65, z: 0.12095843}
+  m_LocalPosition: {x: -16.34, y: -1.7, z: 0.12095843}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

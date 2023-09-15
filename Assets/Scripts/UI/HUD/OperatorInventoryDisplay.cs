@@ -35,9 +35,12 @@ namespace FunMath
 
         private void OnEnable()
         {
-            selector.OnSelectionChange += OnSelectionChange;
-            var inventory = selector.GetInventory();
-            inventory.OnInventoryChanged += OnInventoryChanged;
+            if (selector != null)
+            {
+                selector.OnSelectionChange += OnSelectionChange;
+                var inventory = selector.GetInventory();
+                inventory.OnInventoryChanged += OnInventoryChanged;
+            }
         }
 
         private void OnDisable()
